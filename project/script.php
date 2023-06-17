@@ -1,4 +1,3 @@
-
 </div>
 </div>
 
@@ -7,12 +6,51 @@
 <!-- Popper.JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 <script type="text/javascript">
- $(document).ready(function() {
-  $('#sidebarCollapse').on('click', function() {
-    $('#sidebar').toggleClass('active');
+  $(document).ready(function() {
+    $('#sidebarCollapse').on('click', function() {
+      $('#sidebar').toggleClass('active');
+    });
+
+
   });
-
-
-});
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"> </script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.2/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.min.js"></script>
+<script>
+$(document).ready(function() {
+  var table = $('#example')[0]; // Get the table element
+
+  var switching = true;
+  while (switching) {
+    switching = false;
+    var rows = table.rows;
+    for (var i = 1; i < (rows.length - 1); i++) {
+      var shouldSwitch = false;
+      var x = rows[i].getElementsByTagName("td")[0];
+      var y = rows[i + 1].getElementsByTagName("td")[0];
+      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+        shouldSwitch = true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+
+  // DataTable initialization
+  $('#example').DataTable({
+    "paging": true,
+    "autoWidth": true,
+    "columnDefs": [
+      { "orderable": false, "targets": [6] }, // Disable sorting for the "Action" column
+      { "type": "num", "targets": [5] } // Set the sorting type for Column 5 as numeric
+    ],
+    "order": [[5, "asc"], [0, "asc"]] // Sort by Column 5 in ascending order and then by Column 0 in ascending order
+  });
+});
+
+</script>

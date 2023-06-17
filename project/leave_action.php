@@ -40,16 +40,16 @@ if ($action == 'approve') {
     $query = "UPDATE `leave` 
     SET status = 2
     WHERE leave_id = :leave_id";
-// prepare query for execution
-$stmt = $con->prepare($query);
-$stmt->bindParam(':leave_id', $leave_id);
+    // prepare query for execution
+    $stmt = $con->prepare($query);
+    $stmt->bindParam(':leave_id', $leave_id);
 
-// Execute the query
-if ($stmt->execute()) {
-//echo "<div class='alert alert-success'>Leave apply was rejected.</div>";
-header("Location: leave_read.php?action=rejected&id={$leave_id}");
-} else {
-echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
-}
+    // Execute the query
+    if ($stmt->execute()) {
+        //echo "<div class='alert alert-success'>Leave apply was rejected.</div>";
+        header("Location: leave_read.php?action=rejected&id={$leave_id}");
+    } else {
+        echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
+    }
 }
 ?>

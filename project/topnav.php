@@ -22,7 +22,7 @@
             </li>
 
             <li>
-                <a href="#pageSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-decoration-none">Product</a>
+                <a href="#pageSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-decoration-none">Leave</a>
                 <ul class="collapse list-unstyled" id="pageSubmenu">
                     <li>
                         <a class="nav-link text-decoration-none" href="leave_apply.php">Apply Leave</a>
@@ -34,7 +34,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#pageSubmenu1" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-decoration-none">Order</a>
+                <a href="#pageSubmenu1" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-decoration-none">Work Tour</a>
                 <ul class="collapse list-unstyled" id="pageSubmenu1">
                     <li>
                         <a class="nav-link text-decoration-none" href="order_create.php">Create New Order</a>
@@ -46,10 +46,10 @@
                 </ul>
             </li>
             <li>
-                <a class="nav-link text-decoration-none" href="contact_us.php">Contact Us</a>
+                <a href="password_update.php" class="text-decoration-none">Change Password</a>
             </li>
-
         </ul>
+
         <ul class="list-unstyled CTAs">
             <li>
                 <a class="nav-link text-white text-decoration-none" href="logout.php"> <i class="fa-solid fa-right-from-bracket">Logout</i> Logout </a>

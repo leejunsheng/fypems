@@ -141,7 +141,7 @@ include 'check_user_login.php';
                 <tr>
                     <td></td>
                     <td>
-                        <?php echo "<a href='employee_update.php?leave_id={$leave_id}' class='btn btn-primary'>Edit <i class='fa-solid fa-pen-to-square'></i></a>"; ?>
+                        <?php echo "<a href='leave_update.php?leave_id={$leave_id}' class='btn btn-primary'>Edit <i class='fa-solid fa-pen-to-square'></i></a>"; ?>
                         <a href=leave_read.php class='btn btn-secondary m-r-1em mx-2'>Back to read leave</a>
                     </td>
                 </tr>

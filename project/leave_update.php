@@ -75,62 +75,46 @@ $uid = $_SESSION['user_id']
                         $leave_cat = $_POST['leave-cat'];
                         $start_date = $_POST['start-date'];
                         $end_date = $_POST['end-date'];
-                        $leave_date = $_POST['leave-date'];
+                        $leave_date = isset($_POST['leave-date']) ? $_POST['leave-date'] : null;
                         $time_period = isset($_POST['time-period']) ? $_POST['time-period'] : null;
                         $desc = $_POST['desc'];
-
-
-                        if (empty($start_date)) {
+                    
+                        if ($leave_cat == "Full Day") {
+                            // Set leave_date and time_period to null
+                            $leave_date = null;
+                            $time_period = null;
+                        } elseif($leave_cat == "Half Day") {
+                            // Set start_date and end_date to null
                             $start_date = null;
-                        }
-
-                        if (empty($end_date)) {
                             $end_date = null;
                         }
-
-                        if (empty($leave_date)) {
-                            $leave_date = null;
-                        }
-
-                        if (empty($time_period)) {
-                            $time_period = null;
-                        }
-
-
+                    
                         $error_msg = "";
                         if ($leave_type == "") {
-                            $error_msg .= "<div >Please make sure leave type are not empty.</div>";
+                            $error_msg .= "<div >Please make sure leave type is not empty.</div>";
                         }
-
+                    
                         if ($leave_cat == "") {
-                            $error_msg .= "<div >Please make sure leave category are not empty.</div>";
+                            $error_msg .= "<div >Please make sure leave category is not empty.</div>";
                         }
-
+                    
                         if ($desc == "") {
-                            $error_msg .= "<div >Please make sure leave description are not empty.</div>";
+                            $error_msg .= "<div >Please make sure leave description is not empty.</div>";
                         }
-
+                    
                         if (!empty($error_msg)) {
                             echo "<div class='alert alert-danger'>{$error_msg}</div>";
                         } else {
                             include 'config/database.php';
                             try {
                                 // insert query
-                                $query = "UPDATE `leave` (leave_type, leave_category, start_date, end_date, leave_date, time_period, description) VALUES (:leave_type, :leave_category, :start_date, :end_date, :leave_date, :time_period, :desc)";
-
+                                $query = "UPDATE `leave` SET leave_type = :leave_type, leave_category = :leave_category, start_date = :start_date, end_date = :end_date, leave_date = :leave_date, time_period = :time_period, description = :desc WHERE leave_id = :leave_id";
+                    
                                 // Prepare the statement
                                 $stmt = $con->prepare($query);
-
-                                // posted values
-                                $leave_type = htmlspecialchars(strip_tags($_POST['leave-type']));
-                                $leave_cat = htmlspecialchars(strip_tags($_POST['leave-cat']));
-                                $start_date = htmlspecialchars(strip_tags($_POST['start-date']));
-                                $end_date = htmlspecialchars(strip_tags($_POST['end-date']));
-                                $leave_date = htmlspecialchars(strip_tags($_POST['leave-date']));
-                                $time_period = isset($_POST['time-period']) ? $_POST['time-period'] : null;
-                                $desc = htmlspecialchars(strip_tags($_POST['desc']));
-
+                    
                                 // Bind parameters
+                                $stmt->bindParam(':leave_id', $leave_id);
                                 $stmt->bindParam(':leave_type', $leave_type);
                                 $stmt->bindParam(':leave_category', $leave_cat);
                                 $stmt->bindParam(':start_date', $start_date);
@@ -138,12 +122,12 @@ $uid = $_SESSION['user_id']
                                 $stmt->bindParam(':leave_date', $leave_date);
                                 $stmt->bindParam(':time_period', $time_period);
                                 $stmt->bindParam(':desc', $desc);
-
+                    
                                 // Execute the query
                                 if ($stmt->execute()) {
-                                    echo "<div class='alert alert-success'>Leave added successfully.</div>";
+                                    echo "<div class='alert alert-success'>Leave updated successfully.</div>";
                                 } else {
-                                    echo "<div class='alert alert-danger'>Unable to save record.</div>";
+                                    echo "<div class='alert alert-danger'>Unable to update record.</div>";
                                 }
                             }
                             // show error
@@ -152,6 +136,7 @@ $uid = $_SESSION['user_id']
                             }
                         }
                     }
+                    
                     ?>
 
                     <!-- html form here where the product information will be entered -->
@@ -159,7 +144,7 @@ $uid = $_SESSION['user_id']
                     <div class="card" style="border-radius: 15px; ">
                         <div class="card-body p-4 p-md-5 ">
                             <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Apply Leave</h3>
-                            <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data">
+                            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?leave_id={$leave_id}"); ?>" method="post" enctype="multipart/form-data">
                                 <div class="card-body ">
                                     <div class="form-group row">
                                         <label class="col-lg-4 col-form-label" for="leave-type">Leave Type <span class="text-danger">*</span></label>

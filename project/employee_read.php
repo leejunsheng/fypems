@@ -9,18 +9,13 @@ $role = $_SESSION['role'];
 <html>
 
 <head>
-    <title>employee List</title>
+    <title>Employee List</title>
     <!-- Latest compiled and minified Bootstrap CSS -->
     <?php include 'head.php'; ?>
 </head>
 
 <body>
     <?php include 'topnav.php'; ?>
-    <!-- container -->
-    <div class="container-fluid ">
-        <!-- container -->
-        <div class="container my-3">
-
             <div class="page-header ">
                 <h1>Read employee</h1>
             </div>
@@ -75,20 +70,27 @@ $role = $_SESSION['role'];
             if ($num > 0) {
 
                 // data from database will be here
-                echo "<table class='table table-hover table-responsive table-bordered read-table'>"; //start table
+                echo "
+                <div id='wrapper'>
+                    <div id='content-wrapper'>
+                        <div class='container-fluid'>
+                            <div class='card mb-3'>
+                                <div class='card-body'>
+                                    <div class='table-responsive'>
+                                        <table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'> "; //start table
 
                 //creating our table heading
                 echo "<tr>";
-                echo "<th class='col-1'>User ID</th>";
-                echo "<th class='col-1'>Image</th>";
-                echo "<th class='col-1'>First Name</th>";
-                echo "<th class='col-1'>Last Name</th>";
-                echo "<th class='col-1'>Gender</th>";
-                echo "<th class='col-2'>Birthday</th>";
-                echo "<th class='col-2'>Department</th>";
-                echo "<th class='col-2'>Registration Date</th>";
-                echo "<th class='col-1'>Account Status</th>";
-                echo "<th class='col-2'>Action</th>";
+                echo "<th>User ID</th>";
+                echo "<th>Image</th>";
+                echo "<th>First Name</th>";
+                echo "<th>Last Name</th>";
+                echo "<th>Gender</th>";
+                echo "<th>Birthday</th>";
+                echo "<th>Department</th>";
+                echo "<th>Registration Date</th>";
+                echo "<th>Account Status</th>";
+                echo "<th class='col-4'>Action</th>";
                 echo "</tr>";
 
                 //GET DATA FROM DATABASE
