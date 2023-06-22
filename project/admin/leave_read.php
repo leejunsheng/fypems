@@ -34,7 +34,6 @@ $uid = $_SESSION['user_id']
                 echo "<div class='alert alert-success'>Record was updated.</div>";
             }
 
-
             // delete message prompt will be here
             $action = isset($_GET['action']) ? $_GET['action'] : "";
 

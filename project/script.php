@@ -19,38 +19,82 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.min.js"></script>
 <script>
-$(document).ready(function() {
-  var table = $('#example')[0]; // Get the table element
+  $(document).ready(function() {
+    var table = $('#example')[0]; // Get the table element
 
-  var switching = true;
-  while (switching) {
-    switching = false;
-    var rows = table.rows;
-    for (var i = 1; i < (rows.length - 1); i++) {
-      var shouldSwitch = false;
-      var x = rows[i].getElementsByTagName("td")[0];
-      var y = rows[i + 1].getElementsByTagName("td")[0];
-      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-        shouldSwitch = true;
-        break;
+    var switching = true;
+    while (switching) {
+      switching = false;
+      var rows = table.rows;
+      for (var i = 1; i < (rows.length - 1); i++) {
+        var shouldSwitch = false;
+        var x = rows[i].getElementsByTagName("td")[0];
+        var y = rows[i + 1].getElementsByTagName("td")[0];
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          shouldSwitch = true;
+          break;
+        }
+      }
+      if (shouldSwitch) {
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
       }
     }
-    if (shouldSwitch) {
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-    }
-  }
 
-  // DataTable initialization
-  $('#example').DataTable({
-    "paging": true,
-    "autoWidth": true,
-    "columnDefs": [
-      { "orderable": false, "targets": [6] }, // Disable sorting for the "Action" column
-      { "type": "num", "targets": [5] } // Set the sorting type for Column 5 as numeric
-    ],
-    "order": [[5, "asc"], [0, "asc"]] // Sort by Column 5 in ascending order and then by Column 0 in ascending order
+    // DataTable initialization
+    $('#example').DataTable({
+      "paging": true,
+      "autoWidth": true,
+      "columnDefs": [{
+          "orderable": false,
+          "targets": [6]
+        }, // Disable sorting for the "Action" column
+        {
+          "type": "num",
+          "targets": [5]
+        } // Set the sorting type for Column 5 as numeric
+      ],
+      "order": [
+        [5, "asc"],
+        [0, "asc"]
+      ] // Sort by Column 5 in ascending order and then by Column 0 in ascending order
+    });
   });
-});
+</script>
 
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+  // ...
+
+  // Submit form and get new records
+  $('#create_notice').on('submit', function(event) {
+    event.preventDefault();
+    if ($('#subject').val() != '' && $('#comment').val() != '') {
+      var form_data = $(this).serialize();
+      $.ajax({
+        url: "insert.php",
+        method: "POST",
+        data: form_data,
+        success: function(data) {
+          $('#create_notice')[0].reset();
+          load_unseen_notification();
+        }
+      });
+    } else {
+      alert("Both Fields are Required");
+    }
+  });
+
+    // Load new notifications
+    $(document).on('click', '.dropdown-toggle', function() {
+      $('.count').html(data.unseen_notification);
+      load_unseen_notification('yes');
+    });
+
+    setInterval(function() {
+      load_unseen_notification();
+    }, 5000);
+  });
 </script>

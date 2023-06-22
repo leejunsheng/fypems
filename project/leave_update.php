@@ -1,20 +1,14 @@
 <?php
-// include database connection
 include 'check_user_login.php';
-$username = $_SESSION['login'];
-$uid = $_SESSION['user_id']
-
 
 ?>
 
 <!DOCTYPE HTML>
 <html>
-
 <head>
-    <title>Employee Profile</title>
+    <title>Update Leave</title>
     <!-- Latest compiled and minified Bootstrap CSS -->
     <?php include 'head.php'; ?>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -78,30 +72,30 @@ $uid = $_SESSION['user_id']
                         $leave_date = isset($_POST['leave-date']) ? $_POST['leave-date'] : null;
                         $time_period = isset($_POST['time-period']) ? $_POST['time-period'] : null;
                         $desc = $_POST['desc'];
-                    
+
                         if ($leave_cat == "Full Day") {
                             // Set leave_date and time_period to null
                             $leave_date = null;
                             $time_period = null;
-                        } elseif($leave_cat == "Half Day") {
+                        } elseif ($leave_cat == "Half Day") {
                             // Set start_date and end_date to null
                             $start_date = null;
                             $end_date = null;
                         }
-                    
+
                         $error_msg = "";
                         if ($leave_type == "") {
                             $error_msg .= "<div >Please make sure leave type is not empty.</div>";
                         }
-                    
+
                         if ($leave_cat == "") {
                             $error_msg .= "<div >Please make sure leave category is not empty.</div>";
                         }
-                    
+
                         if ($desc == "") {
                             $error_msg .= "<div >Please make sure leave description is not empty.</div>";
                         }
-                    
+
                         if (!empty($error_msg)) {
                             echo "<div class='alert alert-danger'>{$error_msg}</div>";
                         } else {
@@ -109,10 +103,10 @@ $uid = $_SESSION['user_id']
                             try {
                                 // insert query
                                 $query = "UPDATE `leave` SET leave_type = :leave_type, leave_category = :leave_category, start_date = :start_date, end_date = :end_date, leave_date = :leave_date, time_period = :time_period, description = :desc WHERE leave_id = :leave_id";
-                    
+
                                 // Prepare the statement
                                 $stmt = $con->prepare($query);
-                    
+
                                 // Bind parameters
                                 $stmt->bindParam(':leave_id', $leave_id);
                                 $stmt->bindParam(':leave_type', $leave_type);
@@ -122,10 +116,11 @@ $uid = $_SESSION['user_id']
                                 $stmt->bindParam(':leave_date', $leave_date);
                                 $stmt->bindParam(':time_period', $time_period);
                                 $stmt->bindParam(':desc', $desc);
-                    
+
                                 // Execute the query
                                 if ($stmt->execute()) {
-                                    echo "<div class='alert alert-success'>Leave updated successfully.</div>";
+                                    echo "<div class='alert alert-success'>Record was updated.</div>";
+
                                 } else {
                                     echo "<div class='alert alert-danger'>Unable to update record.</div>";
                                 }
@@ -136,7 +131,7 @@ $uid = $_SESSION['user_id']
                             }
                         }
                     }
-                    
+
                     ?>
 
                     <!-- html form here where the product information will be entered -->
@@ -217,7 +212,7 @@ $uid = $_SESSION['user_id']
 
                                     <div class="">
                                         <div class="row w-50 ">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        <input type='submit' value='Update' class='btn btn-primary' />
                                         </div>
                                     </div>
                                 </div>

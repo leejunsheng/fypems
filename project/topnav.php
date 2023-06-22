@@ -1,9 +1,18 @@
+<?php
+$uid = $_SESSION['user_id'];
+?>
+
+
 <div class="wrapper">
     <!-- Sidebar  -->
+
+
     <nav id="sidebar">
         <div class="sidebar-header">
             <h5 class="ms-4">Welcome, <?php echo $_SESSION['login']; ?></h5>
         </div>
+
+
         <ul class="list-unstyled components mt-5">
             <li>
                 <a class="text-decoration-none" aria-current="page" href="index.php">Dashboard</a>
@@ -46,8 +55,22 @@
                 </ul>
             </li>
             <li>
-                <a href="password_update.php" class="text-decoration-none">Change Password</a>
+                <?php
+                $uid = $_SESSION['user_id'];
+                echo "<a class='nav-link text-decoration-none' href='password_update.php?user_id=$uid'>Change Password</a>";
+                ?>
             </li>
+
+            <li>
+            <a class="nav-link text-decoration-none" href="notice.php"> Notification 
+
+                <i class=" ms-5 fa-solid fa-bell"></i>
+                <?php if ($unseenCount > 0) { ?>
+                    <span class="count"><?php echo $unseenCount; ?></span>
+                <?php } ?>
+            </a>
+            </li>
+
         </ul>
 
         <ul class="list-unstyled CTAs">
@@ -57,6 +80,8 @@
 
         </ul>
     </nav>
+
+
 
     <!-- Page Content  -->
     <div id="content">

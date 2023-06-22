@@ -24,7 +24,7 @@ include 'check_user_login.php';
             $user_id = isset($_GET['user_id']) ? $_GET['user_id'] : die('ERROR: Record ID not found.');
 
             //include database connection
-            include '../config/database.php';
+            include 'config/database.php';
 
             $action = isset($_GET['action']) ? $_GET['action'] : "";
 
@@ -51,7 +51,6 @@ include 'check_user_login.php';
                 // values to fill up our form
                 $username = $row['username'];
                 $image = $row['image'];
-                $password = $row['password'];
                 $firstname = $row['firstname'];
                 $lastname = $row['lastname'];
                 $gender = $row['gender'];
@@ -68,14 +67,10 @@ include 'check_user_login.php';
             <?php
             // check if form was submitted
             if ($_POST) {
-                $pass_word = ($_POST['password']);
-                $old_password = md5($_POST['old_password']);
-                $confirm_password = ($_POST['confirm_password']);
                 $firstname = $_POST['firstname'];
                 $lastname = $_POST['lastname'];
                 $gender = $_POST['gender'];
                 $datebirth = $_POST['datebirth'];
-
                 $today = date("Ymd");
                 $date1 = date_create($datebirth);
                 $date2 = date_create($today);
@@ -87,36 +82,6 @@ include 'check_user_login.php';
 
                 $error_msg = "";
 
-                $password_empty = false;
-                if ($old_password == md5("") && $pass_word == "" && $confirm_password == "") {
-                    $password_empty = true;
-                } else {
-                    echo "2";
-                    if ($row['password'] == $old_password) {
-                        if ($pass_word == "") {
-                            $error_msg .= "<div>Please make sure password are not empty.</div>";
-                        } elseif (strlen($pass_word) < 8) {
-                            $error_msg .= "<div>Please make sure password more than 8 character. </div>";
-                        } elseif (!preg_match('/[a-z]/', $pass_word)) {
-                            $error_msg .= "<div> Please make sure password combine capital a-z. </div>";
-                        } elseif (!preg_match('/[0-9]/', $pass_word)) {
-                            $error_msg .= " <div> Please make sure password combine 0-9. </div>";
-                        }
-
-                        if ($old_password == $pass_word) {
-                            $error_msg .= "<div>Please make sure Old Password cannot same with New Password.</div>";
-                        }
-                        if ($old_password != "" && $password != "" && $confirm_password == "") {
-                            $error_msg .= "<div>Please make sure confirm password are not empty.</div>";
-                        }
-                        if ($pass_word != $confirm_password) {
-                            $error_msg .= "<div>Please make sure Confirm Password and New Password are same.</div>";
-                        }
-                    } else {
-                        echo "3";
-                        $error_msg .= "<div>Wrong Old Password.</div>";
-                    }
-                }
 
                 if ($firstname == "") {
                     $error_msg .= "<div>Please enter your first name.</div>";
@@ -224,22 +189,17 @@ include 'check_user_login.php';
                     echo "<div class='alert alert-danger'>{$error_msg}</div>";
                 } else {
                     // include database connection
-                    include '../config/database.php';
+                    include 'config/database.php';
                     try {
                         // write update query
                         // in this case, it seemed like we have so many fields to pass and
                         // it is better to label them and not use question marks
-                        $query = "UPDATE employee SET username=:username, image=:image, password=:password, firstname=:firstname, lastname=:lastname, gender=:gender, datebirth=:datebirth, accstatus=:accstatus WHERE user_id = :user_id";
+                        $query = "UPDATE employee SET username=:username, image=:image, firstname=:firstname, lastname=:lastname, gender=:gender, datebirth=:datebirth, accstatus=:accstatus WHERE user_id = :user_id";
                         // prepare query for excecution
                         $stmt = $con->prepare($query);
                         // posted values
 
                         $image = htmlspecialchars(strip_tags($image));
-                        if ($password_empty == true) {
-                            $password = $row['password'];
-                        } else {
-                            $password = htmlspecialchars(md5(strip_tags($_POST['password'])));
-                        }
                         $firstname = htmlspecialchars(strip_tags($_POST['firstname']));
                         $lastname = htmlspecialchars(strip_tags($_POST['lastname']));
                         $gender = htmlspecialchars(strip_tags($_POST['gender']));
@@ -250,7 +210,6 @@ include 'check_user_login.php';
                         // bind the parameters
                         $stmt->bindParam(':username', $username);
                         $stmt->bindParam(':image', $image);
-                        $stmt->bindParam(':password', $password);
                         $stmt->bindParam(':firstname', $firstname);
                         $stmt->bindParam(':lastname', $lastname);
                         $stmt->bindParam(':gender', $gender);
@@ -293,18 +252,6 @@ include 'check_user_login.php';
                             }
                             ?>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>Old Password</td>
-                        <td><input type='password' name='old_password' class='form-control' /></td>
-                    </tr>
-                    <tr>
-                        <td>New Password</td>
-                        <td><input type='password' name='password' class='form-control' /></td>
-                    </tr>
-                    <tr>
-                        <td>Confirm Password</td>
-                        <td><input type='password' name='confirm_password' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td>First Name</td>

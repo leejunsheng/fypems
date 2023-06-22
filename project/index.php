@@ -1,5 +1,4 @@
 <?php
-
 // To check user are login
 include 'check_user_login.php';
 
@@ -25,9 +24,15 @@ echo "Role: " . $role;
     <!-- container -->
     <?php include 'topnav.php'; ?>
 
+
     <div class="container-fluid row m-0  d-flex justify-content-between align-items-center">
       <?php
       include 'config/database.php';
+
+      if (isset($_GET['update'])) {
+          echo "<div class='alert alert-success mt-3'>Password change successful</div>";
+         
+      }
 
       $query = "SELECT * FROM employee";
       $stmt = $con->prepare($query);
