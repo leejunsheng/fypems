@@ -80,7 +80,7 @@ $role = $_SESSION['role'];
                                         <table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'> "; //start table
 
                 //creating our table heading
-                echo "<tr>";
+                echo "<tr data-sortable='true'>";
                 echo "<th>User ID</th>";
                 echo "<th>Image</th>";
                 echo "<th>First Name</th>";

@@ -99,7 +99,7 @@ include 'check_user_login.php';
                     <td><?php echo htmlspecialchars($datebirth, ENT_QUOTES);  ?></td>
                 </tr>
                 <tr>
-                    <td>Registeration Data</td>
+                    <td>Registeration Date</td>
                     <td><?php echo htmlspecialchars($registration_dt, ENT_QUOTES);  ?></td>
                 </tr>
                 <tr>

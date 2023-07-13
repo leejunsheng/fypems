@@ -11,7 +11,7 @@ $uid = $_SESSION['user_id']
 <html>
 
 <head>
-    <title>Employee Profile</title>
+    <title>Apply Leave</title>
     <!-- Latest compiled and minified Bootstrap CSS -->
     <?php include 'head.php'; ?>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

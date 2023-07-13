@@ -107,7 +107,7 @@ $role = $_SESSION['role'];
                         $query = "UPDATE employee SET password=:password WHERE user_id = :user_id";
                         // prepare query for excecution
                         $stmt = $con->prepare($query);
-                        
+
                         // posted values
                         $password = htmlspecialchars(md5(strip_tags($_POST['password'])));
 
@@ -117,7 +117,7 @@ $role = $_SESSION['role'];
 
                         // Execute the query
                         if ($stmt->execute()) {
-                           // echo "<div class='alert alert-success'>Password change success.</div>";
+                            // echo "<div class='alert alert-success'>Password change success.</div>";
                             header("Location: index.php?update={$user_id}");
                         } else {
                             echo "<div class='alert alert-danger'>Unable to change password. Please try again.</div>";
@@ -132,6 +132,8 @@ $role = $_SESSION['role'];
             } ?>
 
             <!--we have our html form here where new record information can be updated-->
+
+
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?user_id={$user_id}"); ?>" method="post">
                 <table class="table table-hover table-responsive table-bordered">
                     <tr>
@@ -161,7 +163,11 @@ $role = $_SESSION['role'];
         <!-- end .container -->
     </div>
 
+
+
+
     <?php include 'script.php'; ?>
 
 </body>
+
 </html>

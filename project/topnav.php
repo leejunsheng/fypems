@@ -15,11 +15,11 @@ $uid = $_SESSION['user_id'];
 
         <ul class="list-unstyled components mt-5">
             <li>
-                <a class="text-decoration-none" aria-current="page" href="index.php">Dashboard</a>
+                <a class="text-decoration-none nav-link" aria-current="page" href="index.php">Dashboard</a>
             </li>
 
             <li>
-                <a href="#pagemenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-decoration-none">Employee</a>
+                <a href="#pagemenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-decoration-none nav-link">Employee</a>
                 <ul class="collapse list-unstyled" id="pagemenu">
                     <li>
                         <a class="nav-link text-decoration-none" href="employee_create.php">Create employee</a>
@@ -31,7 +31,7 @@ $uid = $_SESSION['user_id'];
             </li>
 
             <li>
-                <a href="#pageSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-decoration-none">Leave</a>
+                <a href="#pageSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-decoration-none nav-link">Leave</a>
                 <ul class="collapse list-unstyled" id="pageSubmenu">
                     <li>
                         <a class="nav-link text-decoration-none" href="leave_apply.php">Apply Leave</a>
@@ -43,32 +43,35 @@ $uid = $_SESSION['user_id'];
                 </ul>
             </li>
             <li>
-                <a href="#pageSubmenu1" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-decoration-none">Work Tour</a>
+                <a href="#pageSubmenu1" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-decoration-none nav-link">Work Tour</a>
                 <ul class="collapse list-unstyled" id="pageSubmenu1">
                     <li>
-                        <a class="nav-link text-decoration-none" href="order_create.php">Create New Order</a>
+                        <a class="nav-link text-decoration-none" href="tour_apply.php">Apply Work Tour</a>
                     </li>
                     <li>
-                        <a class="nav-link text-decoration-none" href="order_summary.php">Order Summary</a>
+                        <a class="nav-link text-decoration-none" href="tour_read.php">Work Tour List</a>
                     </li>
 
                 </ul>
             </li>
+
+            <li>
+                <a href="#pageSubmenu2" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-decoration-none nav-link">Announcement</a>
+                <ul class="collapse list-unstyled" id="pageSubmenu2">
+                    <li>
+                        <a class="nav-link text-decoration-none" href="notice.php">Notification</a>
+                    </li>
+                    <li>
+                        <a class="nav-link text-decoration-none" href="notice_read.php">Read Notification</a>
+                    </li>
+                </ul>
+            </li>
+            
             <li>
                 <?php
                 $uid = $_SESSION['user_id'];
                 echo "<a class='nav-link text-decoration-none' href='password_update.php?user_id=$uid'>Change Password</a>";
                 ?>
-            </li>
-
-            <li>
-            <a class="nav-link text-decoration-none" href="notice.php"> Notification 
-
-                <i class=" ms-5 fa-solid fa-bell"></i>
-                <?php if ($unseenCount > 0) { ?>
-                    <span class="count"><?php echo $unseenCount; ?></span>
-                <?php } ?>
-            </a>
             </li>
 
         </ul>

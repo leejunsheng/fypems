@@ -1,6 +1,3 @@
-</div>
-</div>
-
 <!-- jQuery CDN - Slim version (=without AJAX) -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <!-- Popper.JS -->
@@ -11,6 +8,17 @@
       $('#sidebar').toggleClass('active');
     });
 
+    $('.dropdown-toggle').on('click', function() {
+            var submenu = $(this).next('.collapse');
+            var otherSubmenus = $('.collapse').not(submenu);
+
+            if (submenu.hasClass('show')) {
+                submenu.removeClass('show');
+            } else {
+                otherSubmenus.removeClass('show');
+                submenu.addClass('show');
+            }
+        });
 
   });
 </script>
@@ -65,27 +73,27 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-$(document).ready(function() {
-  // ...
+  $(document).ready(function() {
+    // ...
 
-  // Submit form and get new records
-  $('#create_notice').on('submit', function(event) {
-    event.preventDefault();
-    if ($('#subject').val() != '' && $('#comment').val() != '') {
-      var form_data = $(this).serialize();
-      $.ajax({
-        url: "insert.php",
-        method: "POST",
-        data: form_data,
-        success: function(data) {
-          $('#create_notice')[0].reset();
-          load_unseen_notification();
-        }
-      });
-    } else {
-      alert("Both Fields are Required");
-    }
-  });
+    // Submit form and get new records
+    $('#create_notice').on('submit', function(event) {
+      event.preventDefault();
+      if ($('#subject').val() != '' && $('#comment').val() != '') {
+        var form_data = $(this).serialize();
+        $.ajax({
+          url: "insert.php",
+          method: "POST",
+          data: form_data,
+          success: function(data) {
+            $('#create_notice')[0].reset();
+            load_unseen_notification();
+          }
+        });
+      } else {
+        alert("Both Fields are Required");
+      }
+    });
 
     // Load new notifications
     $(document).on('click', '.dropdown-toggle', function() {
@@ -97,4 +105,15 @@ $(document).ready(function() {
       load_unseen_notification();
     }, 5000);
   });
+</script>
+<!-- confirm delete record will be here -->
+<script type='text/javascript'>
+  // confirm record deletion
+  function delete_employee(user_id) {
+    if (confirm('Are you sure?')) {
+      // if the user clicked ok,
+      // pass the id to delete.php and execute the delete query
+      window.location = 'employee_delete.php?user_id=' + user_id;
+    }
+  }
 </script>

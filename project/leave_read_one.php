@@ -9,7 +9,7 @@ include 'check_user_login.php';
 <html>
 
 <head>
-    <title>Employee Profile</title>
+    <title>Read Leave Detail</title>
     <!-- Latest compiled and minified Bootstrap CSS -->
     <?php include 'head.php'; ?>
 </head>

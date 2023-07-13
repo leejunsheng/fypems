@@ -76,15 +76,12 @@ a:focus {
     display: block;
 }
 
-#sidebar ul li a:hover {
-    color: #88a0ff;
-    background: #fff;
-}
+
 
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
     color: #fff;
-    background: #6d7fcc;
+    
 }
 
 a[data-toggle="collapse"] {
@@ -113,6 +110,11 @@ ul ul a {
     vertical-align: middle;
     background: #eee;
 }
+
+body {
+  margin: 2em;
+}
+
 
 
 /* ---------------------------------------------------

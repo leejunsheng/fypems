@@ -9,7 +9,7 @@ include 'check_user_login.php';
 <html>
 
 <head>
-    <title>Employee Profile</title>
+    <title>Work Tour Detail</title>
     <!-- Latest compiled and minified Bootstrap CSS -->
     <?php include 'head.php'; ?>
 </head>
@@ -22,7 +22,7 @@ include 'check_user_login.php';
         <div class="container my-3">
 
             <div class="page-header my-3">
-                <h1>Read employee</h1>
+                <h1>Read Work Tour Detail</h1>
             </div>
 
             <!-- PHP read one record will be here -->
@@ -30,23 +30,23 @@ include 'check_user_login.php';
 
             // get passed parameter value, in this case, the record ID
             // isset() is a PHP function used to verify if a value is there or not
-            $leave_id = isset($_GET['leave_id']) ? $_GET['leave_id'] : die('ERROR: Record ID not found.');
+            $tour_id = isset($_GET['tour_id']) ? $_GET['tour_id'] : die('ERROR: Record ID not found.');
 
             //include database connection
-            include '../config/database.php';
+            include 'config/database.php';
 
             // read current record's data
             try {
                 // prepare select query
                 $query = "SELECT *
-                FROM `leave` AS l
+                FROM `tour` AS l
                 JOIN employee AS e ON l.user_id = e.user_id
-                WHERE l.leave_id = :leave_id";
+                WHERE l.tour_id = :tour_id";
 
                 $stmt = $con->prepare($query);
 
                 // Bind the parameter
-                $stmt->bindParam(":leave_id", $leave_id);
+                $stmt->bindParam(":tour_id", $tour_id);
 
                 // execute our query
                 $stmt->execute();
@@ -56,12 +56,12 @@ include 'check_user_login.php';
 
                 // values to fill up our form
 
-                $leave_id = $row['leave_id'];
-                $leave_type = $row['leave_type'];
-                $leave_category = $row['leave_category'];
+                $tour_id = $row['tour_id'];
+                $tour_type = $row['tour_type'];
+                $tour_category = $row['tour_category'];
                 $start_date = $row['start_date'];
                 $end_date = $row['end_date'];
-                $leave_date = $row['leave_date'];
+                $tour_date = $row['tour_date'];
                 $time_period = $row['time_period'];
                 $status = $row['status'];
                 $entry_date = $row['entry_date'];
@@ -80,8 +80,8 @@ include 'check_user_login.php';
             <!--we have our html table here where the record will be displayed-->
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
-                    <td>Leave ID</td>
-                    <td><?php echo htmlspecialchars($leave_id, ENT_QUOTES);  ?></td>
+                    <td>tour ID</td>
+                    <td><?php echo htmlspecialchars($tour_id, ENT_QUOTES);  ?></td>
                 </tr>
                 <tr>
                     <td>Name</td>
@@ -89,17 +89,17 @@ include 'check_user_login.php';
                 </tr>
 
                 <tr>
-                    <td>Leave Type</td>
-                    <td><?php echo htmlspecialchars($leave_type, ENT_QUOTES);  ?></td>
+                    <td>tour Type</td>
+                    <td><?php echo htmlspecialchars($tour_type, ENT_QUOTES);  ?></td>
                 </tr>
 
                 <tr>
-                    <td>Leave Category</td>
-                    <td><?php echo htmlspecialchars($leave_category, ENT_QUOTES);  ?></td>
+                    <td>tour Category</td>
+                    <td><?php echo htmlspecialchars($tour_category, ENT_QUOTES);  ?></td>
                 </tr>
 
                 <?php
-                if ($leave_category == "Full Day") {
+                if ($tour_category == "Full Day") {
                     echo "
                  <tr>
                  <td>Start Date</td>
@@ -112,8 +112,8 @@ include 'check_user_login.php';
                 } else {
                     echo "
                 <tr>
-                <td>Leave Date</td>
-                <td>" . htmlspecialchars($leave_date, ENT_QUOTES) . "</td>
+                <td>tour Date</td>
+                <td>" . htmlspecialchars($tour_date, ENT_QUOTES) . "</td>
                 </tr>
                 <tr>
                 <td>Time Period</td>
@@ -141,8 +141,8 @@ include 'check_user_login.php';
                 <tr>
                     <td></td>
                     <td>
-                        <?php echo "<a href='employee_update.php?leave_id={$leave_id}' class='btn btn-primary'>Edit <i class='fa-solid fa-pen-to-square'></i></a>"; ?>
-                        <a href=leave_read.php class='btn btn-secondary m-r-1em mx-2'>Back to read leave</a>
+                        <?php echo "<a href='tour_update.php?tour_id={$tour_id}' class='btn btn-primary'>Edit <i class='fa-solid fa-pen-to-square'></i></a>"; ?>
+                        <a href=tour_read.php class='btn btn-secondary m-r-1em mx-2'>Back to read tour</a>
                     </td>
                 </tr>
             </table>
