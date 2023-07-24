@@ -71,7 +71,7 @@ include 'check_user_login.php';
 
             <!-- HTML read one record table will be here -->
             <!--we have our html table here where the record will be displayed-->
-            <table class='table table-hover table-responsive table-bordered'>
+            <table class='table table-hover table-responsive table-bordered ' id='dataTable' >
                 <tr>
                     <td>Username</td>
                     <td><?php echo htmlspecialchars($username, ENT_QUOTES);  ?></td>
@@ -114,6 +114,9 @@ include 'check_user_login.php';
                     </td>
                 </tr>
             </table>
+            <div>
+        <a href='#' onclick='printTable()' class='btn btn-secondary m-b-1em my-3'>Print Table <i class='fa-solid fa-printer mt-1'></i></a>
+    </div>
 
         </div>
     </div>

@@ -37,6 +37,10 @@ a:focus {
     box-shadow: 5px 5px 5px 5px rgb(22 5 207 / 10%);
 }
 
+body {
+  margin: 2em;
+}
+
 .wrapper {
     display: flex;
     width: 100%;
@@ -48,6 +52,13 @@ a:focus {
     max-width: 250px;
     background: #8aa1ff;
     color: #fff;
+    transition: all 0.3s;
+}
+
+#content {
+    width: 100%;
+    padding: 20px;
+    min-height: 100vh;
     transition: all 0.3s;
 }
 
@@ -111,22 +122,7 @@ ul ul a {
     background: #eee;
 }
 
-body {
-  margin: 2em;
-}
 
-
-
-/* ---------------------------------------------------
-    CONTENT STYLE
------------------------------------------------------ */
-
-#content {
-    width: 100%;
-    padding: 20px;
-    min-height: 100vh;
-    transition: all 0.3s;
-}
 
 /* ---------------------------------------------------
     MEDIAQUERIES

@@ -1,11 +1,11 @@
 <?php
 $uid = $_SESSION['user_id'];
+$role = $_SESSION['role'];
 ?>
 
 
 <div class="wrapper">
     <!-- Sidebar  -->
-
 
     <nav id="sidebar">
         <div class="sidebar-header">
@@ -15,20 +15,31 @@ $uid = $_SESSION['user_id'];
 
         <ul class="list-unstyled components mt-5">
             <li>
-                <a class="text-decoration-none nav-link" aria-current="page" href="index.php">Dashboard</a>
+                <a class="text-decoration-none nav-link" aria-current="page" href="employee_read_one.php?user_id=<?php echo $uid; ?>">My Profile</a>
             </li>
 
-            <li>
-                <a href="#pagemenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-decoration-none nav-link">Employee</a>
-                <ul class="collapse list-unstyled" id="pagemenu">
-                    <li>
-                        <a class="nav-link text-decoration-none" href="employee_create.php">Create employee</a>
-                    </li>
-                    <li>
-                        <a class="nav-link text-decoration-none" href="employee_read.php">Employee List</a>
-                    </li>
-                </ul>
-            </li>
+            <?php if ($role == 1) : ?>
+                <li>
+                    <a class="text-decoration-none nav-link" aria-current="page" href="index.php">Dashboard</a>
+                </li>
+
+
+                <li>
+                    <a href="#pagemenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-decoration-none nav-link">Employee</a>
+                    <ul class="collapse list-unstyled" id="pagemenu">
+
+                        <li>
+                            <a class="nav-link text-decoration-none" href="employee_create.php">Create employee</a>
+                        </li>
+
+                        <li>
+                            <a class="nav-link text-decoration-none" href="employee_read.php">Employee List</a>
+                        </li>
+                    </ul>
+                </li>
+            <?php endif; ?>
+
+
 
             <li>
                 <a href="#pageSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-decoration-none nav-link">Leave</a>
@@ -58,15 +69,17 @@ $uid = $_SESSION['user_id'];
             <li>
                 <a href="#pageSubmenu2" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-decoration-none nav-link">Announcement</a>
                 <ul class="collapse list-unstyled" id="pageSubmenu2">
+                    <?php if ($role >= 1) : ?>
+                        <li>
+                            <a class="nav-link text-decoration-none" href="notice.php">Add Announcement</a>
+                        </li>
+                    <?php endif; ?>
                     <li>
-                        <a class="nav-link text-decoration-none" href="notice.php">Notification</a>
-                    </li>
-                    <li>
-                        <a class="nav-link text-decoration-none" href="notice_read.php">Read Notification</a>
+                        <a class="nav-link text-decoration-none" href="notice_read.php">Read Announcement</a>
                     </li>
                 </ul>
             </li>
-            
+
             <li>
                 <?php
                 $uid = $_SESSION['user_id'];

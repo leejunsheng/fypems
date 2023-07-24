@@ -70,7 +70,7 @@ echo "Role: " . $role;
     // link to create record form
     echo "
     <div>
-        <a href='apply_leave.php' class='btn btn-primary m-b-1em my-3'> Apply leave <i class='fa-solid fa-plus mt-1'></i></a>
+        <a href='leave_apply.php' class='btn btn-primary m-b-1em my-3'> Apply leave <i class='fa-solid fa-plus mt-1'></i></a>
     </div>";
 
     // check if more than 0 records found
@@ -83,10 +83,10 @@ echo "Role: " . $role;
                     <div class='card mb-3'>
                         <div class='card-body'>
                             <div class='table-responsive'>
-                                <table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>
+                                <table class='table table-bordered' id='dataTable'>
                                     <thead>
                                         <tr>
-                                            <th>S.No.</th>
+                                            <th>Leave ID</th>
                                             <th>Leave Type</th>
                                             <th>Leave Category</th>
                                             <th>Leave Start Date</th>
@@ -164,24 +164,31 @@ echo "Role: " . $role;
             echo "<td class=''>";
             echo "<a href='leave_read_one.php?leave_id={$leave_id}' class='btn btn-info m-r-1em mx-2'>Read <i class='fa-brands fa-readme'></i></a>";
             echo "<a href='leave_update.php?leave_id={$leave_id}' class='btn btn-primary mx-2 my-2'>Edit <i class='fa-solid fa-pen-to-square'></i></a>";
-            echo "<a href='#' onclick='delete_employee({$user_id});' class='btn btn-danger mx-2'>Delete <i class='fa-solid fa-trash'></i></a>";
+            echo "<a href='#' onclick='delete_leave({$leave_id});' class='btn btn-danger mx-2'>Delete <i class='fa-solid fa-trash'></i></a>";
             echo "</td>";
             echo "</tr>";
         }
 
         // end table
         echo "</tbody>
+        
               </table>
+          
             </div>
           </div>
         </div>
+        
       </div>
     </div>
+    
   </div>";
     } else {
         echo "<div class='alert alert-danger'>No records found.</div>";
     }
+    
     ?>
+
+    
     </div>
     </div>
 
@@ -191,11 +198,11 @@ echo "Role: " . $role;
     <!-- confirm delete record will be here -->
     <script type='text/javascript'>
         // confirm record deletion
-        function delete_employee(user_id) {
+        function delete_leave(leave_id) {
             if (confirm('Are you sure?')) {
                 // if the user clicked ok,
                 // pass the id to delete.php and execute the delete query
-                window.location = 'employee_delete.php?user_id=' + user_id;
+                window.location = 'leave_delete.php?leave_id=' + leave_id;
             }
         }
     </script>

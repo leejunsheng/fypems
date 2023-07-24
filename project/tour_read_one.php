@@ -80,7 +80,7 @@ include 'check_user_login.php';
             <!--we have our html table here where the record will be displayed-->
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
-                    <td>tour ID</td>
+                    <td>Tour ID</td>
                     <td><?php echo htmlspecialchars($tour_id, ENT_QUOTES);  ?></td>
                 </tr>
                 <tr>

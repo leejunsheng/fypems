@@ -66,7 +66,7 @@ include 'config/database.php';
 
             <div class="card" style="border-radius: 15px; ">
                 <div class="card-body p-4 p-md-5 ">
-                    <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Create Notice</h3>
+                    <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Create Announcement</h3>
                     <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data" ">
                         <div class="form-group">
                             <label>Enter Subject</label>
@@ -76,8 +76,8 @@ include 'config/database.php';
                             <label>Enter Comment</label>
                             <textarea name="comment" id="comment" class="form-control" rows="5"></textarea>
                         </div>
-                        <div class="form-group">
-                            <input type="submit" name="post" id="post" class="btn btn-info" value="Post" />
+                        <div class="form-group mt-3">
+                            <input type="submit" name="post" id="post" class="btn btn-info" value="Add" />
                         </div>
                     </form>
                 </div>

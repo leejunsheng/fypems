@@ -70,7 +70,7 @@ echo "Role: " . $role;
     // link to create record form
     echo "
     <div>
-        <a href='apply_tour.php' class='btn btn-primary m-b-1em my-3'> Apply tour <i class='fa-solid fa-plus mt-1'></i></a>
+        <a href='tour_apply.php' class='btn btn-primary m-b-1em my-3'> Apply tour <i class='fa-solid fa-plus mt-1'></i></a>
     </div>";
 
     // check if more than 0 records found
@@ -86,11 +86,11 @@ echo "Role: " . $role;
                                 <table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>
                                     <thead>
                                         <tr>
-                                            <th>S.No.</th>
-                                            <th>tour Type</th>
-                                            <th>tour Category</th>
-                                            <th>tour Start Date</th>
-                                            <th>tour End Date</th>
+                                            <th>Tour ID</th>
+                                            <th>Tour Type</th>
+                                            <th>Tour Category</th>
+                                            <th>Tour Start Date</th>
+                                            <th>Tour End Date</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -164,7 +164,7 @@ echo "Role: " . $role;
             echo "<td class=''>";
             echo "<a href='tour_read_one.php?tour_id={$tour_id}' class='btn btn-info m-r-1em mx-2'>Read <i class='fa-brands fa-readme'></i></a>";
             echo "<a href='tour_update.php?tour_id={$tour_id}' class='btn btn-primary mx-2 my-2'>Edit <i class='fa-solid fa-pen-to-square'></i></a>";
-            echo "<a href='#' onclick='delete_employee({$user_id});' class='btn btn-danger mx-2'>Delete <i class='fa-solid fa-trash'></i></a>";
+            echo "<a href='#' onclick='delete_tour({$tour_id});' class='btn btn-danger mx-2'>Delete <i class='fa-solid fa-trash'></i></a>";
             echo "</td>";
             echo "</tr>";
         }
@@ -172,7 +172,9 @@ echo "Role: " . $role;
         // end table
         echo "</tbody>
               </table>
-            </div>
+              <div>
+              <a href='#' onclick='printTable()' class='btn btn-secondary m-b-1em my-3'>Print Table <i class='fa-solid fa-printer mt-1'></i></a>
+          </div></div>
           </div>
         </div>
       </div>
@@ -183,7 +185,11 @@ echo "Role: " . $role;
     }
     ?>
     </div>
+    
+
+
     </div>
+    
 
     <!-- end .container -->
     <?php include 'script.php'; ?>
@@ -191,11 +197,11 @@ echo "Role: " . $role;
     <!-- confirm delete record will be here -->
     <script type='text/javascript'>
         // confirm record deletion
-        function delete_employee(user_id) {
+        function delete_tour(tour_id) {
             if (confirm('Are you sure?')) {
                 // if the user clicked ok,
                 // pass the id to delete.php and execute the delete query
-                window.location = 'employee_delete.php?user_id=' + user_id;
+                window.location = 'tour_delete.php?tour_id=' + tour_id;
             }
         }
     </script>
