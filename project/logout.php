@@ -7,4 +7,5 @@ session_unset();
 // destroy the session 
 session_destroy();
 
-header("Location: login.php?");
+header("Location: login.php");
+exit(); // or die();

@@ -4,7 +4,7 @@ include 'check_user_login.php';
 $username = $_SESSION['login'];
 $uid = $_SESSION['user_id'];
 $role = $_SESSION['role'];
-echo "Role: " . $role;
+
 ?>
 
 <!DOCTYPE HTML>
@@ -19,7 +19,7 @@ echo "Role: " . $role;
 <body>
     <?php include 'topnav.php'; ?>
     <div class="page-header ">
-        <h1>Read employee</h1>
+        <h1 class="ms-3">Read employee</h1>
     </div>
 
     <!-- PHP code to read records will be here -->
@@ -64,7 +64,7 @@ echo "Role: " . $role;
 
     echo "
             <div>
-            <a href='employee_create.php' class='btn btn-primary m-b-1em my-3'>  Create New employee <i class='fa-solid fa-plus mt-1'></i></a>
+            <a href='employee_create.php' class='btn btn-primary m-b-1em my-3 ms-3'>  Create New employee <i class='fa-solid fa-plus mt-1'></i></a>
           </div>";
 
     //check if more than 0 record found
@@ -78,10 +78,10 @@ echo "Role: " . $role;
                             <div class='card mb-3'>
                                 <div class='card-body'>
                                     <div class='table-responsive'>
-                                        <table class='table table-bordered' width='100%' > "; //start table
+                                        <table class='table table-bordered myTable' width='100%' > "; //start table
 
         //creating our table heading
-        
+
         echo "   <thead> <tr data-sortable='true'>";
 
         echo "<th>User ID</th>";
@@ -93,7 +93,7 @@ echo "Role: " . $role;
         echo "<th>Department</th>";
         echo "<th>Registration Date</th>";
         echo "<th>Account Status</th>";
-        echo "<th class='col-4' id='action-row'>Action</th>";
+        echo "<th class='col-3' id='action-row'>Action</th>";
         echo "   </thead> </tr>";
 
         //GET DATA FROM DATABASE
@@ -144,36 +144,21 @@ echo "Role: " . $role;
     }
     ?>
 
-    <div>
-        <a href='#' onclick='printTable()' class='btn btn-secondary m-b-1em my-3'>Print Table <i class='fa-solid fa-printer mt-1'></i></a>
-    </div>
-
     </div>
     </div>
 
     <!-- end .container -->
     <?php include 'script.php'; ?>
-
-
-
-    <script>
-        function printTable() {
-            var originalContent = document.body.innerHTML;
-            var printTableContent = document.getElementById('dataTable').outerHTML;
-
-            document.body.innerHTML = printTableContent;
-            window.print();
-            document.body.innerHTML = originalContent;
+    <script type='text/javascript'>
+        // confirm record deletion
+        function delete_employee(user_id) {
+            if (confirm('Are you sure?')) {
+                // if the user clicked ok,
+                // pass the id to delete.php and execute the delete query
+                window.location = 'employee_delete.php?user_id=' + user_id;
+            }
         }
     </script>
-
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<script>
-  $(document).ready(function() {
-    $('#dataTable').DataTable();
-  });
-</script>
-
 </body>
 
 </html>

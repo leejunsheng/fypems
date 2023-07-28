@@ -4,7 +4,7 @@ include 'check_user_login.php';
 $username = $_SESSION['login'];
 $uid = $_SESSION['user_id'];
 $role = $_SESSION['role'];
-echo "Role: " . $role;
+
 ?>
 
 

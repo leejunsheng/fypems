@@ -25,13 +25,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"> </script>
 
 <!-- confirm delete record will be here -->
-<script type='text/javascript'>
-  // confirm record deletion
-  function delete_employee(user_id) {
-    if (confirm('Are you sure?')) {
-      // if the user clicked ok,
-      // pass the id to delete.php and execute the delete query
-      window.location = 'employee_delete.php?user_id=' + user_id;
-    }
+
+
+<script>
+  function printTable() {
+    window.print();
   }
 </script>

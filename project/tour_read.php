@@ -4,7 +4,7 @@ include 'check_user_login.php';
 $username = $_SESSION['login'];
 $uid = $_SESSION['user_id'];
 $role = $_SESSION['role'];
-echo "Role: " . $role;
+
 ?>
 
 <!DOCTYPE HTML>
@@ -19,7 +19,7 @@ echo "Role: " . $role;
 <body>
     <?php include 'topnav.php'; ?>
     <div class="page-header">
-        <h1>Work Tour List</h1>
+        <h1 class="ms-3">Work Tour List</h1>
     </div>
 
     <!-- PHP code to read records will be here -->
@@ -70,7 +70,7 @@ echo "Role: " . $role;
     // link to create record form
     echo "
     <div>
-        <a href='tour_apply.php' class='btn btn-primary m-b-1em my-3'> Apply tour <i class='fa-solid fa-plus mt-1'></i></a>
+        <a href='tour_apply.php' class='btn btn-primary m-b-1em my-3 ms-3'> Apply tour <i class='fa-solid fa-plus mt-1'></i></a>
     </div>";
 
     // check if more than 0 records found
@@ -172,9 +172,7 @@ echo "Role: " . $role;
         // end table
         echo "</tbody>
               </table>
-              <div>
-              <a href='#' onclick='printTable()' class='btn btn-secondary m-b-1em my-3'>Print Table <i class='fa-solid fa-printer mt-1'></i></a>
-          </div></div>
+            </div>
           </div>
         </div>
       </div>

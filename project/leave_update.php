@@ -1,6 +1,5 @@
 <?php
 include 'check_user_login.php';
-
 ?>
 
 <!DOCTYPE HTML>
@@ -119,8 +118,8 @@ include 'check_user_login.php';
 
                                 // Execute the query
                                 if ($stmt->execute()) {
-                                    echo "<div class='alert alert-success'>Record was updated.</div>";
-
+                                    //echo "<div class='alert alert-success'>Record was updated.</div>";
+                                    header("Location: leave_read.php?update={$user_id}");
                                 } else {
                                     echo "<div class='alert alert-danger'>Unable to update record.</div>";
                                 }
@@ -138,7 +137,7 @@ include 'check_user_login.php';
 
                     <div class="card" style="border-radius: 15px; ">
                         <div class="card-body p-4 p-md-5 ">
-                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Apply Leave</h3>
+                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">Apply Leave</h3>
                             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?leave_id={$leave_id}"); ?>" method="post" enctype="multipart/form-data">
                                 <div class="card-body ">
                                     <div class="form-group row">
@@ -211,9 +210,13 @@ include 'check_user_login.php';
 
 
                                     <div class="">
-                                        <div class="row w-50 ">
+                                        <div class="text-end ">
                                         <input type='submit' value='Update' class='btn btn-primary' />
+
+                                        <a href=tour_read.php class='btn btn-secondary m-r-1em mx-2'><i class="fa-solid fa-circle-arrow-left"></i> Back to read tour</a>
                                         </div>
+
+                                        
                                     </div>
                                 </div>
                         </div>

@@ -142,8 +142,10 @@ include 'check_user_login.php';
                     <td></td>
                     <td>
                         <?php echo "<a href='tour_update.php?tour_id={$tour_id}' class='btn btn-primary'>Edit <i class='fa-solid fa-pen-to-square'></i></a>"; ?>
-                        <a href=tour_read.php class='btn btn-secondary m-r-1em mx-2'>Back to read tour</a>
+                        <a href='#' onclick='printTable()' class='btn btn-primary m-b-1em my-3 mx-2'>Print Table <i class="fa-solid fa-print"></i></a>
+                        <a href=tour_read.php class='btn btn-secondary m-r-1em '><i class="fa-solid fa-circle-arrow-left"></i> Back to read tour</a>
                     </td>
+            
                 </tr>
             </table>
 

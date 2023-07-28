@@ -27,6 +27,7 @@ $uid = $_SESSION['user_id']
                     <!-- container -->
                     <!-- PHP insert code will be here -->
                     <?php
+                    include 'config/database.php';
                     $tour_type = $tour_cat = $start_date = $end_date = $tour_date = $time_period = $remark = "";
 
                     if ($_POST) {
@@ -57,6 +58,23 @@ $uid = $_SESSION['user_id']
 
 
                         $error_msg = "";
+
+                        // If any tour record is found for the current date, it displays an error message indicating that the date has already been applied for leave.
+                        $today = date('Y-m-d');
+                        $query = "SELECT *
+                        FROM `tour` AS l
+                        JOIN `employee` AS e ON l.user_id = e.user_id
+                        WHERE e.user_id = :user_id
+                        AND ('$start_date'  AND  '$end_date' BETWEEN l.start_date AND l.end_date OR '$tour_date' = l.tour_date)";
+
+                        $stmt1 = $con->prepare($query);
+                        $stmt1->bindParam(':user_id', $uid);
+                        $stmt1->execute();
+                        $alreadyapply = $stmt1->rowCount();
+                        if ($alreadyapply > 0) {
+                            $error_msg .= "<div >The date already been apply.</div>";
+                        }
+
                         if ($tour_type == "") {
                             $error_msg .= "<div >Please make sure tour type are not empty.</div>";
                         }
@@ -73,7 +91,7 @@ $uid = $_SESSION['user_id']
                             echo "<div class='alert alert-danger'>{$error_msg}</div>";
                         } else {
                             // include database connection
-                            include 'config/database.php';
+
                             try {
                                 // insert query
                                 $query = "INSERT INTO `tour` (user_id, tour_type, tour_category, start_date, end_date, tour_date, time_period, description) VALUES (:user_id, :tour_type, :tour_category, :start_date, :end_date, :tour_date, :time_period, :desc)";
@@ -93,7 +111,9 @@ $uid = $_SESSION['user_id']
 
                                 // Execute the query
                                 if ($stmt->execute()) {
-                                    echo "<div class='alert alert-success'>tour added successfully.</div>";
+                                    
+                                    //echo "<div class='alert alert-success'>Work Tour apply successfully.</div>";
+                                    header("Location: tour_read.php?action=created");
                                 } else {
                                     echo "<div class='alert alert-danger'>Unable to save record.</div>";
                                 }
@@ -110,29 +130,29 @@ $uid = $_SESSION['user_id']
 
                     <div class="card" style="border-radius: 15px; ">
                         <div class="card-body p-4 p-md-5 ">
-                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Apply tour</h3>
+                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">Apply Tour</h3>
                             <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data">
                                 <div class="card-body ">
                                     <div class="form-group row">
-                                        <label class="col-lg-4 col-form-label" for="tour-type">tour Type <span class="text-danger">*</span></label>
+                                        <label class="col-lg-4 col-form-label" for="tour-type">Tour Type <span class="text-danger">*</span></label>
                                         <div class="col-lg-6 mb-3">
                                             <select class="form-control" id="tour-type" name="tour-type">
-                                                <option selected="true" disabled>Select tour Type</option>
-                                                <option value="CL">CL</option>
-                                                <option value="EL">EL</option>
-                                                <option value="RH">RH</option>
-                                                <option value="HPL">HPL</option>
-                                                <option value="CCL">CCL</option>
-                                                <option value="Others">Others</option>
+                                                <option selected disabled>Select Tour Type</option>
+                                                <option value="CM">Client Meetings</option>
+                                                <option value="TW">Training and Workshops</option>
+                                                <option value="IT">Incentive Travel</option>
+                                                <option value="CE">Corporate Events</option>
+                                                <option value="SV">Supplier Visits</option>
+                                                <option value="OTH">Others</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <div class="form-group row mb-3">
-                                        <label class="col-lg-4 col-form-label" for="tour-cat">tour Category <span class="text-danger">*</span></label>
+                                        <label class="col-lg-4 col-form-label" for="tour-cat">Tour Category <span class="text-danger">*</span></label>
                                         <div class="col-lg-6">
                                             <select class="form-control" id="tour-cat" name="tour-cat" onchange="toggleFields(this.value);">
-                                                <option selected="true" disabled>Select tour Category</option>
+                                                <option selected="true" disabled>Select Tour Category</option>
                                                 <option value="Full Day">Full Day</option>
                                                 <option value="Half Day">Half Day</option>
                                             </select>
@@ -181,8 +201,9 @@ $uid = $_SESSION['user_id']
                                         </div>
                                     </div>
 
-                                    <div class="">
-                                        <div class="row w-50 ">
+                                    <div class="form-group row">
+                                        <div class="col-lg-4"></div>
+                                        <div class="col-lg-6 text-center">
                                             <button type="submit" class="btn btn-primary">Submit</button>
                                         </div>
                                     </div>

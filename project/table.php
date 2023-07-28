@@ -74,7 +74,7 @@ include 'check_user_login.php';
                 </li>
 
                 <li>
-                    <a href="#pageSubmenu2" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-decoration-none nav-link">Announcement</a>
+                    <a href="#pageSubmenu2" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-decoration-none nav-link">Notice</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu2">
                         <li>
                             <a class=" nav-link text-decoration-none" href="notice.php"> Notification

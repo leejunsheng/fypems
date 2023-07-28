@@ -4,7 +4,7 @@ include 'check_user_login.php';
 $username = $_SESSION['login'];
 $uid = $_SESSION['user_id'];
 $role = $_SESSION['role'];
-echo "Role: " . $role;
+
 ?>
 
 <!DOCTYPE HTML>
@@ -19,7 +19,7 @@ echo "Role: " . $role;
 <body>
     <?php include 'topnav.php'; ?>
     <div class="page-header">
-        <h1>Read Leave</h1>
+        <h1 class="ms-3">Read Leave</h1>
     </div>
 
     <!-- PHP code to read records will be here -->
@@ -70,7 +70,7 @@ echo "Role: " . $role;
     // link to create record form
     echo "
     <div>
-        <a href='leave_apply.php' class='btn btn-primary m-b-1em my-3'> Apply leave <i class='fa-solid fa-plus mt-1'></i></a>
+        <a href='leave_apply.php' class='btn btn-primary m-b-1em my-3 ms-3'> Apply Leave <i class='fa-solid fa-plus mt-1'></i></a>
     </div>";
 
     // check if more than 0 records found
@@ -96,7 +96,7 @@ echo "Role: " . $role;
                                         </tr>
                                     </thead>
                                     <tbody>";
-                                    
+
         // retrieve our table contents
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $startdate = date('d M Y', strtotime($row['start_date']));
@@ -185,10 +185,8 @@ echo "Role: " . $role;
     } else {
         echo "<div class='alert alert-danger'>No records found.</div>";
     }
-    
-    ?>
 
-    
+    ?>
     </div>
     </div>
 
@@ -207,4 +205,5 @@ echo "Role: " . $role;
         }
     </script>
 </body>
+
 </html>

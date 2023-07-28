@@ -142,13 +142,12 @@ include 'check_user_login.php';
                     <td></td>
                     <td>
                         <?php echo "<a href='leave_update.php?leave_id={$leave_id}' class='btn btn-primary'>Edit <i class='fa-solid fa-pen-to-square'></i></a>"; ?>
-                        <a href=leave_read.php class='btn btn-secondary m-r-1em mx-2'>Back to read leave</a>
+                        <a href='#' onclick='printTable()' class='btn btn-primary m-b-1em my-3 mx-2'>Print Table <i class="fa-solid fa-print"></i></a>
+                        <a href=leave_read.php class='btn btn-secondary m-r-1em '><i class="fa-solid fa-circle-arrow-left"></i> Back to read leave </a>
                     </td>
                 </tr>
             </table>
-            <div>
-        <a href='#' onclick='printTable()' class='btn btn-secondary m-b-1em my-3'>Print Table <i class='fa-solid fa-printer mt-1'></i></a>
-    </div>
+         
         </div>
     </div>
     <!-- end .container -->

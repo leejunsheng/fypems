@@ -27,6 +27,7 @@ $uid = $_SESSION['user_id']
                     <!-- container -->
                     <!-- PHP insert code will be here -->
                     <?php
+                    include 'config/database.php';
                     $leave_type = $leave_cat = $start_date = $end_date = $leave_date = $time_period = $remark = "";
 
                     if ($_POST) {
@@ -37,6 +38,7 @@ $uid = $_SESSION['user_id']
                         $leave_date = $_POST['leave-date'];
                         $time_period = isset($_POST['time-period']) ? $_POST['time-period'] : null;
                         $desc = $_POST['desc'];
+
 
 
                         if (empty($start_date)) {
@@ -55,8 +57,23 @@ $uid = $_SESSION['user_id']
                             $time_period = null;
                         }
 
-
                         $error_msg = "";
+
+                        // If any leave record is found for the current date then error message.
+              
+                        $query = "SELECT *
+                        FROM `leave` AS l
+                        JOIN `employee` AS e ON l.user_id = e.user_id
+                        WHERE e.user_id = :user_id
+                        AND ('$start_date'  AND  '$end_date' BETWEEN l.start_date AND l.end_date OR '$leave_date' = l.leave_date)";
+                        $stmt1 = $con->prepare($query);
+                        $stmt1->bindParam(':user_id', $uid);
+                        $stmt1->execute();
+                        $alreadyapply = $stmt1->rowCount();
+                        if ($alreadyapply > 0) {
+                            $error_msg .= "<div >The date already been apply.</div>";
+                        }
+
                         if ($leave_type == "") {
                             $error_msg .= "<div >Please make sure leave type are not empty.</div>";
                         }
@@ -73,7 +90,7 @@ $uid = $_SESSION['user_id']
                             echo "<div class='alert alert-danger'>{$error_msg}</div>";
                         } else {
                             // include database connection
-                            include 'config/database.php';
+
                             try {
                                 // insert query
                                 $query = "INSERT INTO `leave` (user_id, leave_type, leave_category, start_date, end_date, leave_date, time_period, description) VALUES (:user_id, :leave_type, :leave_category, :start_date, :end_date, :leave_date, :time_period, :desc)";
@@ -93,7 +110,9 @@ $uid = $_SESSION['user_id']
 
                                 // Execute the query
                                 if ($stmt->execute()) {
-                                    echo "<div class='alert alert-success'>Leave added successfully.</div>";
+                                    //echo "<div class='alert alert-success'>Leave added successfully.</div>";
+                                    header("Location: leave_read.php?action=created");
+
                                 } else {
                                     echo "<div class='alert alert-danger'>Unable to save record.</div>";
                                 }
@@ -110,7 +129,7 @@ $uid = $_SESSION['user_id']
 
                     <div class="card" style="border-radius: 15px; ">
                         <div class="card-body p-4 p-md-5 ">
-                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Apply Leave</h3>
+                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">Apply Leave</h3>
                             <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data">
                                 <div class="card-body ">
                                     <div class="form-group row">
@@ -181,9 +200,10 @@ $uid = $_SESSION['user_id']
                                         </div>
                                     </div>
 
-                                    <div class="">
-                                        <div class="row w-50 ">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                    <div class="form-group row">
+                                        <div class="col-lg-4"></div>
+                                        <div class="col-lg-6 text-center">
+                                            <button type="submit" class="btn btn-primary">Apply</button>
                                         </div>
                                     </div>
                                 </div>
