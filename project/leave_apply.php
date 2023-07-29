@@ -2,9 +2,8 @@
 // include database connection
 include 'check_user_login.php';
 $username = $_SESSION['login'];
-$uid = $_SESSION['user_id']
-
-
+$uid = $_SESSION['user_id'];
+$leave_bal = $_SESSION['leave_bal'];
 ?>
 
 <!DOCTYPE HTML>
@@ -19,8 +18,8 @@ $uid = $_SESSION['user_id']
 
 <body>
     <?php include 'topnav.php'; ?>
-    <section class="h-100 py-3">
-        <div class="container h-100">
+    <section class="h-100 pt-3">
+        <div class="container min-vh-100">
             <div class="row justify-content-center align-items-center h-100">
                 <div class="col-12 col-lg-9 col-xl-7">
 
@@ -60,7 +59,7 @@ $uid = $_SESSION['user_id']
                         $error_msg = "";
 
                         // If any leave record is found for the current date then error message.
-              
+
                         $query = "SELECT *
                         FROM `leave` AS l
                         JOIN `employee` AS e ON l.user_id = e.user_id
@@ -72,6 +71,16 @@ $uid = $_SESSION['user_id']
                         $alreadyapply = $stmt1->rowCount();
                         if ($alreadyapply > 0) {
                             $error_msg .= "<div >The date already been apply.</div>";
+                        }
+
+                        $query = "SELECT leave_bal,user_id FROM employee WHERE user_id =:user_id AND leave_bal <= 0;";
+                        $stmt2 = $con->prepare($query);
+                        $stmt2->bindParam(':user_id', $uid);
+                        $stmt2->execute();
+                        $leave_balance = $stmt2->rowCount();
+
+                        if ($leave_balance > 0) {
+                            $error_msg .= "<div >Your leave balance not enough.</div>";
                         }
 
                         if ($leave_type == "") {
@@ -112,7 +121,6 @@ $uid = $_SESSION['user_id']
                                 if ($stmt->execute()) {
                                     //echo "<div class='alert alert-success'>Leave added successfully.</div>";
                                     header("Location: leave_read.php?action=created");
-
                                 } else {
                                     echo "<div class='alert alert-danger'>Unable to save record.</div>";
                                 }
@@ -126,7 +134,6 @@ $uid = $_SESSION['user_id']
                     ?>
 
                     <!-- html form here where the product information will be entered -->
-
                     <div class="card" style="border-radius: 15px; ">
                         <div class="card-body p-4 p-md-5 ">
                             <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">Apply Leave</h3>

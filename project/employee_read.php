@@ -4,7 +4,6 @@ include 'check_user_login.php';
 $username = $_SESSION['login'];
 $uid = $_SESSION['user_id'];
 $role = $_SESSION['role'];
-
 ?>
 
 <!DOCTYPE HTML>
@@ -44,7 +43,7 @@ $role = $_SESSION['role'];
     }
 
     if ($action == 'faildelete') {
-        echo "<div class='alert alert-success'>The employee already have an order unable to delete.</div>";
+        echo "<div class='alert alert-success'>The employee already has an applied, unable to delete.</div>";
     }
 
 
@@ -56,12 +55,10 @@ $role = $_SESSION['role'];
     }
     $stmt = $con->prepare($query);
     $stmt->execute();
-
-    // this is how to get number of rows returned
     $num = $stmt->rowCount();
-
+   
+    
     // link to create record form
-
     echo "
             <div>
             <a href='employee_create.php' class='btn btn-primary m-b-1em my-3 ms-3'>  Create New employee <i class='fa-solid fa-plus mt-1'></i></a>
@@ -69,7 +66,6 @@ $role = $_SESSION['role'];
 
     //check if more than 0 record found
     if ($num > 0) {
-
         // data from database will be here
         echo "
                 <div id='wrapper'>
@@ -92,6 +88,7 @@ $role = $_SESSION['role'];
         echo "<th>Birthday</th>";
         echo "<th>Department</th>";
         echo "<th>Registration Date</th>";
+        echo "<th>Leave Balance</th>";
         echo "<th>Account Status</th>";
         echo "<th class='col-3' id='action-row'>Action</th>";
         echo "   </thead> </tr>";
@@ -103,6 +100,7 @@ $role = $_SESSION['role'];
             // extract row
             // this will make $row['firstname'] to just $firstname only
             extract($row);
+            
             // creating new table row per record
             echo "<tbody><tr>";
             echo "<td class=' text-center'>{$user_id}</td>";
@@ -121,7 +119,7 @@ $role = $_SESSION['role'];
             echo "<td>{$datebirth}</td>";
             echo "<td>{$department}</td>";
             echo "<td>{$registration_dt}</td>";
-
+            echo "<td>{$leave_bal}</td>";
 
             if ($accstatus == 'active') {
                 echo "<td class=' text-center text-success'>  <i class='fa-solid fa-circle-check fs-2'></i></td>";
@@ -129,10 +127,13 @@ $role = $_SESSION['role'];
                 echo "<td class=' text-center text-danger'> <i class='fa-solid fa-circle-xmark fs-2'></i> </td>";
             }
             echo "<td class=''>";
-            echo "<a href='employee_read_one.php?user_id={$user_id}' class='btn btn-info m-r-1em mx-2'>Read <i class='fa-brands fa-readme'></i></a>";
-            echo "<a href='employee_update.php?user_id={$user_id}' class='btn btn-primary   mx-2 my-2'>Edit <i class='fa-solid fa-pen-to-square'></i></a>";
-            echo "<a href='#' onclick='delete_employee({$user_id});'  class='btn btn-danger  mx-2'>Delete <i class='fa-solid fa-trash'></i></a>";
+            echo "<div class='d-flex flex-column flex-lg-row '>";
+            echo "<a href='employee_read_one.php?user_id={$user_id}' class='btn btn-info'>Read <i class='fa-brands fa-readme'></i></a>";
+            echo "<a href='employee_update.php?user_id={$user_id}' class='btn btn-primary mx-lg-2 my-2 my-lg-0'>Edit <i class='fa-solid fa-pen-to-square'></i></a>";
+            echo "<a href='#' onclick='delete_employee({$user_id});'  class='btn btn-danger'>Delete <i class='fa-solid fa-trash'></i></a>";
             echo "</td>";
+            echo "</div>";
+
             echo "</tr>";
         }
 

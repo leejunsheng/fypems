@@ -14,7 +14,7 @@ include 'config/database.php';
 
 <body>
     <?php include 'topnav.php'; ?>
-    <section class="h-100 py-3">
+    <section class="h-100 pt-3">
         <div class="container">
             <?php
             // Get current date

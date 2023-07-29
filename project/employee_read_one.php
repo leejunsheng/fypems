@@ -97,6 +97,10 @@ catch (PDOException $exception) {
                                 <td><?php echo htmlspecialchars($registration_dt, ENT_QUOTES); ?></td>
                             </tr>
                             <tr>
+                                <td>Leave Balance</td>
+                                <td><?php echo htmlspecialchars($leave_bal, ENT_QUOTES);  ?></td>
+                            </tr>
+                            <tr>
                                 <td>Account Status</td>
                                 <td><?php echo htmlspecialchars($accstatus, ENT_QUOTES); ?></td>
                             </tr>

@@ -25,7 +25,7 @@ $role = $_SESSION['role'];
   <?php include 'topnav.php'; ?>
  
 
-  <section class="h-100 py-3">
+  <section class="min-vh-100 pt-3">
     
     <div class="container row m-0 d-flex justify-content-between align-items-center">
       
@@ -108,7 +108,7 @@ $role = $_SESSION['role'];
               </div>
           </div>
 
-        <div class='col-md-4 py-md-0 py-3'>
+        <div class='col-md-4 py-md-0 pt-3'>
                 <div class='card text-white bg-primary boxshadow'>
                     <div class='card-body'>
                         <h5 class='card-title'>Pending Tour Requests</h5>

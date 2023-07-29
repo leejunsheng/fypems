@@ -36,15 +36,15 @@ $role = $_SESSION['role'];
 
     // if it was redirected from delete.php
     if ($action == 'approved') {
-        echo "<div class='alert alert-success'>tour apply was approved</div>";
+        echo "<div class='alert alert-success'>Tour apply was approved</div>";
     }
 
     if ($action == 'rejected') {
-        echo "<div class='alert alert-success'>tour apply was rejected</div>";
+        echo "<div class='alert alert-success'>Tour apply was rejected</div>";
     }
 
     if ($action == 'created') {
-        echo "<div class='alert alert-success'>tour apply was create successfully.</div>";
+        echo "<div class='alert alert-success'>Tour apply was create successfully.</div>";
     }
 
     if ($action == 'deleted') {
@@ -52,7 +52,7 @@ $role = $_SESSION['role'];
     }
 
     if ($action == 'faildelete') {
-        echo "<div class='alert alert-success'>The employee already has an order, unable to delete.</div>";
+        echo "<div class='alert alert-success'>The employee already has an applied, unable to delete.</div>";
     }
 
     // select all data
@@ -70,7 +70,7 @@ $role = $_SESSION['role'];
     // link to create record form
     echo "
     <div>
-        <a href='tour_apply.php' class='btn btn-primary m-b-1em my-3 ms-3'> Apply tour <i class='fa-solid fa-plus mt-1'></i></a>
+        <a href='tour_apply.php' class='btn btn-primary m-b-1em my-3 ms-3'> Apply Tour <i class='fa-solid fa-plus mt-1'></i></a>
     </div>";
 
     // check if more than 0 records found
@@ -91,12 +91,12 @@ $role = $_SESSION['role'];
                                             <th>Tour Category</th>
                                             <th>Tour Start Date</th>
                                             <th>Tour End Date</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                            <th class='col-2'>Status</th>
+                                            <th class='col-3'>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>";
-                                    
+
         // retrieve our table contents
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $startdate = date('d M Y', strtotime($row['start_date']));
@@ -140,15 +140,15 @@ $role = $_SESSION['role'];
                 if ($role == 1) {
                     echo "<td>
                             <a href='tour_action.php?action=approve&id={$tour_id}' style='text-decoration: none;'>
-                                <button class='btn btn-success btn-sm m-1 fw-bold p-1 rounded' style='border: none;'>Approve</button>
+                                <button class='btn btn-success btn-sm m-1 fw-bold p-1 rounded' style='border: none;'>APPROVE</button>
                             </a>
                             <a href='tour_action.php?action=reject&id={$tour_id}' style='text-decoration: none;'>
-                                <button class='btn btn-danger btn-sm m-1 fw-bold p-1 rounded' style='border: none;'>Reject</button>
+                                <button class='btn btn-danger btn-sm m-1 fw-bold p-1 rounded' style='border: none;'>REJECT</button>
                             </a>
                         </td>";
                 } else {
                     echo "<td>
-                            <span class='bg-warning text-dark fw-bold p-1 rounded'>PENDING</span>
+                            <span class='bg-warning text-dark fw-bold p-1 m-1 rounded'>PENDING</span>
                         </td>";
                 }
             } elseif ($row['status'] == 1) {
@@ -162,9 +162,11 @@ $role = $_SESSION['role'];
             }
 
             echo "<td class=''>";
-            echo "<a href='tour_read_one.php?tour_id={$tour_id}' class='btn btn-info m-r-1em mx-2'>Read <i class='fa-brands fa-readme'></i></a>";
-            echo "<a href='tour_update.php?tour_id={$tour_id}' class='btn btn-primary mx-2 my-2'>Edit <i class='fa-solid fa-pen-to-square'></i></a>";
-            echo "<a href='#' onclick='delete_tour({$tour_id});' class='btn btn-danger mx-2'>Delete <i class='fa-solid fa-trash'></i></a>";
+            echo "<div class='d-flex flex-column flex-lg-row '>";
+            echo "<a href='tour_read_one.php?tour_id={$tour_id}' class='btn btn-info '>Read <i class='fa-brands fa-readme'></i></a>";
+            echo "<a href='tour_update.php?tour_id={$tour_id}' class='btn btn-primary mx-lg-2 my-2 my-lg-0'>Edit <i class='fa-solid fa-pen-to-square'></i></a>";
+            echo "<a href='#' onclick='delete_tour({$tour_id});' class='btn btn-danger'>Delete <i class='fa-solid fa-trash'></i></a>";
+            echo "</div>";
             echo "</td>";
             echo "</tr>";
         }
@@ -183,11 +185,11 @@ $role = $_SESSION['role'];
     }
     ?>
     </div>
-    
+
 
 
     </div>
-    
+
 
     <!-- end .container -->
     <?php include 'script.php'; ?>
@@ -204,4 +206,5 @@ $role = $_SESSION['role'];
         }
     </script>
 </body>
+
 </html>

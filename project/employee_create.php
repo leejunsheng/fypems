@@ -19,16 +19,15 @@ if (isset($_SESSION["login"])) {
 
 <body>
 
-    <section class="h-100 py-3">
-        <div class="container h-100">
+    <section class="h-100 pt-3">
+        <div class="container min-vh-100">
             <div class="row justify-content-center align-items-center h-100">
                 <div class="col-12 col-lg-9 col-xl-7">
-
 
                     <!-- container -->
                     <!-- PHP insert code will be here -->
                     <?php
-                    $user_name = $image = $firstname = $lastname =  $gender = $datebirth = $role = $accstatus = "";
+                    $user_name = $image = $firstname = $lastname =  $gender = $datebirth = $role = $accstatus = $department= "";
 
                     if ($_POST) {
                         $user_name = $_POST['username'];
@@ -39,7 +38,7 @@ if (isset($_SESSION["login"])) {
                         $gender =  !empty($_POST['gender']) ? $_POST['gender'] : "";
                         $datebirth = $_POST['datebirth'];
                         $role = !empty($_POST['role']) ? $_POST['role'] : "";
-                        $department = $_POST['department'];
+                        $department = !empty($_POST['department'])? $_POST['department'] : "";
                         $accstatus = !empty($_POST['accstatus']) ? $_POST['accstatus'] : "";
 
 
@@ -106,6 +105,11 @@ if (isset($_SESSION["login"])) {
                         if (empty($accstatus)) {
                             $error_msg .= "<div>Please select your account status.</div>";
                         }
+
+                        if (empty($department)) {
+                            $error_msg .= "<div>Please select your account status.</div>";
+                        }
+
                         // now, if image is not empty, try to upload the image
                         if ($image) {
 

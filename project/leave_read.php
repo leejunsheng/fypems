@@ -52,8 +52,25 @@ $role = $_SESSION['role'];
     }
 
     if ($action == 'faildelete') {
-        echo "<div class='alert alert-success'>The employee already has an order, unable to delete.</div>";
+        echo "<div class='alert alert-success'>The employee already has an applied, unable to delete.</div>";
     }
+
+    if ($action == 'statusfail') {
+    echo "<div class='alert alert-danger'>Unable to update leave status. Please try again.</div>";
+    }
+
+    if ($action == 'updatefail') {
+    echo "<div class='alert alert-danger'>Unable to update leave balance. Please try again.</div>";
+    }
+
+    if ($action == 'leavebal') {
+    echo "<div class='alert alert-danger'>Leave balance is insufficient to approve the leave.</div>";
+    }
+
+    if ($action == 'fetchfail') {
+    echo "<div class='alert alert-danger'>Unable to fetch user information. Please try again.</div>";
+    }
+
 
     // select all data
     if ($role == 1) {
@@ -91,8 +108,8 @@ $role = $_SESSION['role'];
                                             <th>Leave Category</th>
                                             <th>Leave Start Date</th>
                                             <th>Leave End Date</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                            <th class='col-2'>Status</th>
+                                           <th class='col-3' id='action-row'>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>";
@@ -162,10 +179,15 @@ $role = $_SESSION['role'];
             }
 
             echo "<td class=''>";
-            echo "<a href='leave_read_one.php?leave_id={$leave_id}' class='btn btn-info m-r-1em mx-2'>Read <i class='fa-brands fa-readme'></i></a>";
-            echo "<a href='leave_update.php?leave_id={$leave_id}' class='btn btn-primary mx-2 my-2'>Edit <i class='fa-solid fa-pen-to-square'></i></a>";
-            echo "<a href='#' onclick='delete_leave({$leave_id});' class='btn btn-danger mx-2'>Delete <i class='fa-solid fa-trash'></i></a>";
+           
+            echo "<div class='d-flex flex-column flex-lg-row '>";
+            echo "<a href='leave_read_one.php?leave_id={$leave_id}' class='btn btn-info '>Read <i class='fa-brands fa-readme'></i></a>";
+            echo "<a href='leave_update.php?leave_id={$leave_id}' class='btn btn-primary mx-lg-2 my-2 my-lg-0'>Edit  <i class='fa-solid fa-pen-to-square'></i></a>";
+            echo "<a href='#' onclick='delete_leave({$leave_id});' class='btn btn-danger'>Delete <i class='fa-solid fa-trash'></i></a>";
+            echo "</div>";
+
             echo "</td>";
+
             echo "</tr>";
         }
 

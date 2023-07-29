@@ -18,12 +18,12 @@ session_start();
 <body>
     <!-- PHP code to read records will be here -->
     <!-- container -->
-    <section class="h-100 bg-primary">
-        <div class="container py-5 h-100">
-            <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+    <section class="bg-primary d-flex align-items-center min-vh-100">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-12 col-md-6 col-lg-6 col-xl-5">
+                    
                     <div class="card bg-dark text-white" style="border-radius: 1rem;">
-
                         <div class="card-body p-5 text-center">
                             <?php
                             $action = isset($_GET['action']) ? $_GET['action'] : "";
@@ -64,7 +64,13 @@ session_start();
                                             $_SESSION["login"] = $username;
                                             $_SESSION['user_id'] = $row['user_id'];
                                             $_SESSION['role'] = $row['role'];
+                                            
+                                            if($row['role'] ==1){
                                             header("Location: index.php");
+                                            }else{
+                                                header("Location: notice_read.php");
+                                            }
+                                           
                                         }
                                     } else {
                                         echo "<div class='alert alert-danger'>Incorrect Password.</div>";

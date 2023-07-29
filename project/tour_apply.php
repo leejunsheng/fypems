@@ -19,8 +19,8 @@ $uid = $_SESSION['user_id']
 
 <body>
     <?php include 'topnav.php'; ?>
-    <section class="h-100 py-3">
-        <div class="container h-100">
+    <section class="h-100 pt-3">
+        <div class="container min-vh-100">
             <div class="row justify-content-center align-items-center h-100">
                 <div class="col-12 col-lg-9 col-xl-7">
 

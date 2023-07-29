@@ -60,6 +60,7 @@ include 'check_user_login.php';
         $lastname = $_POST['lastname'];
         $department = $_POST['department'];
         $datebirth = $_POST['datebirth'];
+        $leave_bal = $_POST['leave_bal'];
         $today = date("Ymd");
         $date1 = date_create($datebirth);
         $date2 = date_create($today);
@@ -180,7 +181,7 @@ include 'check_user_login.php';
                 // write update query
                 // in this case, it seemed like we have so many fields to pass and
                 // it is better to label them and not use question marks
-                $query = "UPDATE employee SET username=:username, image=:image, firstname=:firstname, lastname=:lastname, gender=:gender, datebirth=:datebirth, accstatus=:accstatus, department=:department WHERE user_id = :user_id";
+                $query = "UPDATE employee SET username=:username, image=:image, firstname=:firstname, lastname=:lastname, gender=:gender, datebirth=:datebirth, accstatus=:accstatus, department=:department, leave_bal=:leave_bal WHERE user_id = :user_id";
                 // prepare query for excecution
                 $stmt = $con->prepare($query);
 
@@ -191,6 +192,7 @@ include 'check_user_login.php';
                 $datebirth = htmlspecialchars(strip_tags($_POST['datebirth']));
                 $accstatus = htmlspecialchars(strip_tags($_POST['accstatus']));
                 $department = htmlspecialchars(strip_tags($_POST['department']));
+                $leave_bal = htmlspecialchars(strip_tags($_POST['leave_bal']));
 
 
                 // bind the parameters
@@ -203,6 +205,7 @@ include 'check_user_login.php';
                 $stmt->bindParam(':user_id', $user_id);
                 $stmt->bindParam(':accstatus', $accstatus);
                 $stmt->bindParam(':department', $department);
+                $stmt->bindParam(':leave_bal', $leave_bal);
 
                 // Execute the query
                 if ($stmt->execute()) {
@@ -273,6 +276,11 @@ include 'check_user_login.php';
                             <tr>
                                 <td>Date Of Birth</td>
                                 <td><input type='date' name='datebirth' value="<?php echo htmlspecialchars($datebirth, ENT_QUOTES);  ?>" /></td>
+                            </tr>
+
+                            <tr>
+                                <td>Leave Balance</td>
+                                <td><input type='text' name='leave_bal' value="<?php echo htmlspecialchars($leave_bal, ENT_QUOTES);  ?>"  class='form-control'/></td>
                             </tr>
 
                             <tr>
