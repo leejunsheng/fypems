@@ -59,7 +59,7 @@ catch (PDOException $exception) {
                         <h4>User Profile</h4>
                     </div>
                     <div class="card-body">
-                        <table class="table table-bordered" id="userTable">
+                        <table class="table table-bordered" >
                           
                             <tr>
                                 <td>Username</td>

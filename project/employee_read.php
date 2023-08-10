@@ -56,8 +56,8 @@ $role = $_SESSION['role'];
     $stmt = $con->prepare($query);
     $stmt->execute();
     $num = $stmt->rowCount();
-   
-    
+
+
     // link to create record form
     echo "
             <div>
@@ -68,30 +68,28 @@ $role = $_SESSION['role'];
     if ($num > 0) {
         // data from database will be here
         echo "
-                <div id='wrapper'>
-                    <div id='content-wrapper'>
-                        <div class='container-fluid'>
-                            <div class='card mb-3'>
-                                <div class='card-body'>
-                                    <div class='table-responsive'>
-                                        <table class='table table-bordered myTable' width='100%' > "; //start table
-
-        //creating our table heading
-
-        echo "   <thead> <tr data-sortable='true'>";
-
-        echo "<th>User ID</th>";
-        echo "<th>Image</th>";
-        echo "<th>First Name</th>";
-        echo "<th>Last Name</th>";
-        echo "<th>Gender</th>";
-        echo "<th>Birthday</th>";
-        echo "<th>Department</th>";
-        echo "<th>Registration Date</th>";
-        echo "<th>Leave Balance</th>";
-        echo "<th>Account Status</th>";
-        echo "<th class='col-3' id='action-row'>Action</th>";
-        echo "   </thead> </tr>";
+        <div id='wrapper'>
+            <div id='content-wrapper'>
+                <div class='container-fluid'>
+                    <div class='card mb-3'>
+                        <div class='card-body'>
+                            <div class='table-responsive'>
+                            <table class='table table-hover table-responsive table-bordered' id='sortTable'> 
+                                    <thead>
+                                   <tr>
+        <th>User ID</th>
+        <th>Image</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Gender</th>
+        <th>Birthday</th>
+        <th>Department</th>
+        <th>Leave Balance</th>
+        <th>Account Status</th>
+        <th class='col-3' id='action-row'>Action</th>
+        </tr>
+        </thead>
+        <tbody>";
 
         //GET DATA FROM DATABASE
         // table body will be here 
@@ -100,9 +98,9 @@ $role = $_SESSION['role'];
             // extract row
             // this will make $row['firstname'] to just $firstname only
             extract($row);
-            
+
             // creating new table row per record
-            echo "<tbody><tr>";
+            echo "<tr>";
             echo "<td class=' text-center'>{$user_id}</td>";
             echo "<td style='width:100px;'><div'><img src='uploads/employee/$image' class='img-fluid'></div> </td>";
             echo "<td>{$firstname}</td>";
@@ -118,7 +116,6 @@ $role = $_SESSION['role'];
             echo "</td>";
             echo "<td>{$datebirth}</td>";
             echo "<td>{$department}</td>";
-            echo "<td>{$registration_dt}</td>";
             echo "<td>{$leave_bal}</td>";
 
             if ($accstatus == 'active') {
@@ -150,6 +147,7 @@ $role = $_SESSION['role'];
 
     <!-- end .container -->
     <?php include 'script.php'; ?>
+
     <script type='text/javascript'>
         // confirm record deletion
         function delete_employee(user_id) {
@@ -160,6 +158,7 @@ $role = $_SESSION['role'];
             }
         }
     </script>
+
 </body>
 
 </html>

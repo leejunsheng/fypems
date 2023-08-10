@@ -18,12 +18,13 @@ session_start();
 <body>
     <!-- PHP code to read records will be here -->
     <!-- container -->
-    <section class="bg-primary d-flex align-items-center min-vh-100">
+    <section class="login d-flex align-items-center min-vh-100">
         <div class="container">
             <div class="row d-flex justify-content-center">
                 <div class="col-12 col-md-6 col-lg-6 col-xl-5">
-                    
-                    <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                    <div class="card bg-dark text-white opacity-100" style="border-radius: 1rem; ">
+
+
                         <div class="card-body p-5 text-center">
                             <?php
                             $action = isset($_GET['action']) ? $_GET['action'] : "";
@@ -107,6 +108,7 @@ session_start();
                 </div>
             </div>
         </div>
+        
     </section>
 </body>
 

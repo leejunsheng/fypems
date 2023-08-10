@@ -37,6 +37,12 @@ a:focus {
     box-shadow: 5px 5px 5px 5px rgb(22 5 207 / 10%);
 }
 
+.login {
+    background-image: url(image/login.jpeg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+
 body {
   margin: 2em;
 }
@@ -60,6 +66,8 @@ body {
     padding: 20px;
     min-height: 100vh;
     transition: all 0.3s;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 
 #sidebar.active {

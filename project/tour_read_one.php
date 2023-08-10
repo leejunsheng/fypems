@@ -78,7 +78,7 @@ include 'check_user_login.php';
 
             <!-- HTML read one record table will be here -->
             <!--we have our html table here where the record will be displayed-->
-            <table class='table table-hover table-responsive table-bordered'>
+            <table class='table table-hover table-responsive table-bordered' id='sortTable'> 
                 <tr>
                     <td>Tour ID</td>
                     <td><?php echo htmlspecialchars($tour_id, ENT_QUOTES);  ?></td>

@@ -11,9 +11,10 @@ $role = $_SESSION['role'];
 <html>
 
 <head>
+    <link href="style.css" rel="stylesheet">
     <title>Leave List</title>
-    <!-- Latest compiled and minified Bootstrap CSS -->
-    <?php include 'head.php'; ?>
+   <!-- Latest compiled and minified Bootstrap CSS -->
+   <?php include 'head.php'; ?>
 </head>
 
 <body>
@@ -56,19 +57,19 @@ $role = $_SESSION['role'];
     }
 
     if ($action == 'statusfail') {
-    echo "<div class='alert alert-danger'>Unable to update leave status. Please try again.</div>";
+        echo "<div class='alert alert-danger'>Unable to update leave status. Please try again.</div>";
     }
 
     if ($action == 'updatefail') {
-    echo "<div class='alert alert-danger'>Unable to update leave balance. Please try again.</div>";
+        echo "<div class='alert alert-danger'>Unable to update leave balance. Please try again.</div>";
     }
 
     if ($action == 'leavebal') {
-    echo "<div class='alert alert-danger'>Leave balance is insufficient to approve the leave.</div>";
+        echo "<div class='alert alert-danger'>Leave balance is insufficient to approve the leave.</div>";
     }
 
     if ($action == 'fetchfail') {
-    echo "<div class='alert alert-danger'>Unable to fetch user information. Please try again.</div>";
+        echo "<div class='alert alert-danger'>Unable to fetch user information. Please try again.</div>";
     }
 
 
@@ -100,7 +101,7 @@ $role = $_SESSION['role'];
                     <div class='card mb-3'>
                         <div class='card-body'>
                             <div class='table-responsive'>
-                                <table class='table table-bordered' id='dataTable'>
+                            <table class='table table-hover table-responsive table-bordered' id='sortTable'> 
                                     <thead>
                                         <tr>
                                             <th>Leave ID</th>
@@ -179,7 +180,7 @@ $role = $_SESSION['role'];
             }
 
             echo "<td class=''>";
-           
+
             echo "<div class='d-flex flex-column flex-lg-row '>";
             echo "<a href='leave_read_one.php?leave_id={$leave_id}' class='btn btn-info '>Read <i class='fa-brands fa-readme'></i></a>";
             echo "<a href='leave_update.php?leave_id={$leave_id}' class='btn btn-primary mx-lg-2 my-2 my-lg-0'>Edit  <i class='fa-solid fa-pen-to-square'></i></a>";
@@ -226,6 +227,8 @@ $role = $_SESSION['role'];
             }
         }
     </script>
+
+
 </body>
 
 </html>
