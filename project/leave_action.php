@@ -4,7 +4,7 @@ include 'check_user_login.php';
 $username = $_SESSION['login'];
 $uid = $_SESSION['user_id'];
 $role = $_SESSION['role'];
-
+$leave_duration = $_SESSION['leave_duration'] ; 
 ?>
 
 
@@ -26,7 +26,7 @@ if ($action == 'approve') {
     $getUserStmt = $con->prepare($getUserQuery);
     $getUserStmt->bindParam(':leave_id', $leave_id);
 
-    // Execute the query to get user_id and leave balance
+    // Execute the query to get user_id
     if ($getUserStmt->execute()) {
         $row = $getUserStmt->fetch(PDO::FETCH_ASSOC);
         $user_id = $row['user_id'];
@@ -41,33 +41,32 @@ if ($action == 'approve') {
             $leave_balance = $balanceRow['leave_bal'];
 
             // Check if leave balance is greater than 0
-            if ($leave_balance > 0) {
-                // Update employee leave balance
-                $updateQuery = "UPDATE employee 
-                            SET leave_bal = leave_bal - 1
-                            WHERE user_id = :user_id";
-                $updateStmt = $con->prepare($updateQuery);
-                $updateStmt->bindParam(':user_id', $user_id);
+            if ($leave_balance >= $leave_duration) {
+                // Update leave status
+                $approveQuery = "UPDATE `leave` SET status = 1  WHERE leave_id = :leave_id";
+                $approveStmt = $con->prepare($approveQuery);
+                $approveStmt->bindParam(':leave_id', $leave_id);
 
-                // Execute the query to update leave balance
-                if ($updateStmt->execute()) {
+                // Execute the query to update leave status
+                if ($approveStmt->execute()) {
 
-                    // Update leave status
-                    $approveQuery = "UPDATE `leave` 
-                    SET status = 1
-                    WHERE leave_id = :leave_id";
-                    $approveStmt = $con->prepare($approveQuery);
-                    $approveStmt->bindParam(':leave_id', $leave_id);
+                    $l = $leave_balance - $leave_duration;
+                    echo "1", $l ;
+                    echo "2",$leave_balance;
+                    echo "3",$leave_duration;
+                    // Update employee leave balance
+                    $updateQuery = "UPDATE employee SET leave_bal = $l  WHERE user_id = :user_id";
+                    $updateStmt = $con->prepare($updateQuery);
+                    $updateStmt->bindParam(':user_id', $user_id);
 
-                    // Execute the query to update leave status
-                    if ($approveStmt->execute()) {
-                        header("Location: leave_read.php?action=approved&id={$leave_id}");
-                    
+                    // Execute the query to update leave balance
+                    if ($updateStmt->execute()) {
+                        header("Location: leave_read.php?action=approved&id={$leave_id};");   
                     } else {
-                        header("Location: leave_read.php?action=statusfail");
+                        header("Location: leave_read.php?action=updatefail");
                     }
                 } else {
-                    header("Location: leave_read.php?action=updatefail");
+                    header("Location: leave_read.php?action=statusfail");
                 }
             } else {
                 header("Location: leave_read.php?action=leavebal");
@@ -78,10 +77,6 @@ if ($action == 'approve') {
     } else {
         header("Location: leave_read.php?action=fetchfail");
     }
-
-   
-
-    
 } elseif ($action == 'reject') {
     // Process the leave rejection
     $query = "UPDATE `leave` 

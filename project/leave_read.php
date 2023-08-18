@@ -13,12 +13,13 @@ $role = $_SESSION['role'];
 <head>
     <link href="style.css" rel="stylesheet">
     <title>Leave List</title>
-   <!-- Latest compiled and minified Bootstrap CSS -->
-   <?php include 'head.php'; ?>
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <?php include 'head.php'; ?>
 </head>
 
 <body>
     <?php include 'topnav.php'; ?>
+    
     <div class="page-header">
         <h1 class="ms-3">Read Leave</h1>
     </div>

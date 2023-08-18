@@ -31,10 +31,12 @@ a:focus {
 
 #sidebarCollapse{
     box-shadow: 0px 5px 10px 10px rgb(22 5 207 / 10%);
+    position: sticky;
 }
 
 .boxshadow{
     box-shadow: 5px 5px 5px 5px rgb(22 5 207 / 10%);
+    
 }
 
 .login {
@@ -54,8 +56,9 @@ body {
 }
 
 #sidebar {
-    min-width: 250px;
-    max-width: 250px;
+    left: 0;
+    height: 100%;
+    width: 250px;
     background: #8aa1ff;
     color: #fff;
     transition: all 0.3s;
@@ -69,6 +72,7 @@ body {
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
+
 
 #sidebar.active {
     margin-left: -250px;

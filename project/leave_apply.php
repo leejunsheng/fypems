@@ -3,7 +3,6 @@
 include 'check_user_login.php';
 $username = $_SESSION['login'];
 $uid = $_SESSION['user_id'];
-$leave_bal = $_SESSION['leave_bal'];
 ?>
 
 <!DOCTYPE HTML>
@@ -91,6 +90,8 @@ $leave_bal = $_SESSION['leave_bal'];
                             $error_msg .= "<div >Please make sure leave category are not empty.</div>";
                         }
 
+
+
                         if ($desc == "") {
                             $error_msg .= "<div >Please make sure leave description are not empty.</div>";
                         }
@@ -119,8 +120,25 @@ $leave_bal = $_SESSION['leave_bal'];
 
                                 // Execute the query
                                 if ($stmt->execute()) {
+                                    // Calculate leave duration based on leave type and category
+                                    $leave_duration = 0; // Initialize leave duration
+
+                                    if ($leave_cat == "Full Day") {
+                                        // Calculate leave duration for full day leave
+                                        $start_date_obj = new DateTime($start_date);
+                                        $end_date_obj = new DateTime($end_date);
+                                        $interval = $start_date_obj->diff($end_date_obj);
+                                        $leave_duration = $interval->days + 1; // Adding 1 to include both start and end days
+                                    } elseif ($leave_cat == "Half Day") {
+                                        // Calculate leave duration for half day leave
+                                        $leave_duration = 0.5; // Half day
+                                    }
+
+                                    $_SESSION['leave_duration'] = $leave_duration; // Store leave duration in session
+
                                     //echo "<div class='alert alert-success'>Leave added successfully.</div>";
-                                    header("Location: leave_read.php?action=created");
+                                    //header("Location: leave_read.php?action=created");
+                                    echo $leave_duration;
                                 } else {
                                     echo "<div class='alert alert-danger'>Unable to save record.</div>";
                                 }

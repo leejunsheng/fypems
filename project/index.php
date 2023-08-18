@@ -118,7 +118,7 @@ $role = $_SESSION['role'];
                 </div>
         </div>
 
-          <div class='col-md-4'>
+          <div class='col-md-4 py-md-0 pt-3'>
               <div class='card text-white bg-primary boxshadow'>
                   <div class='card-body'>
                       <h5 class='card-title'>Pending Leave Requests</h5>

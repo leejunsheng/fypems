@@ -6,7 +6,7 @@ $role = $_SESSION['role'];
 
 <div class="wrapper">
     <!-- Sidebar  -->
-
+<div class="">
     <nav id="sidebar">
         <div class="sidebar-header">
             <h5 class="ms-4">Welcome, <?php echo $_SESSION['login']; ?></h5>
@@ -95,11 +95,11 @@ $role = $_SESSION['role'];
 
         </ul>
     </nav>
-
+</div>
 
 
     <!-- Page Content  -->
-    <div id="content">
+    <div id="content" >
         <div class="container-fluid">
             <button type="button" id="sidebarCollapse" class="btn ">
                 <i class="fas fa-align-left"></i>
