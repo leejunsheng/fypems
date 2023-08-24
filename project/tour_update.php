@@ -168,14 +168,14 @@ include 'check_user_login.php';
 
                                     <div id="fullday" style="display: none;" class="mb-3 ">
                                         <div class="form-group row ">
-                                            <label class="col-lg-4 col-form-label" for="start-date">tour Start Date <span class="text-danger">*</span></label>
+                                            <label class="col-lg-4 col-form-label" for="start-date">Tour Start Date <span class="text-danger">*</span></label>
                                             <div class="col-lg-6 mb-3 form-outline datepicker">
                                                 <input type="date" class="form-control" name="start-date" value="<?php echo htmlspecialchars($start_date, ENT_QUOTES);  ?>" placeholder="Select tour Start Date">
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="end-date">tour End Date <span class="text-danger">*</span></label>
+                                            <label class="col-lg-4 col-form-label" for="end-date">Tour End Date <span class="text-danger">*</span></label>
                                             <div class="col-lg-6 mb-3 form-outline datepicker">
                                                 <input type="date" class="form-control" name="end-date" value="<?php echo htmlspecialchars($end_date, ENT_QUOTES);  ?>" placeholder="Select tour End Date">
                                             </div>
@@ -184,7 +184,7 @@ include 'check_user_login.php';
 
                                     <div id="halfday" class="mb-3" style='display: none;'>
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="tour-date">tour Date <span class="text-danger">*</span></label>
+                                            <label class="col-lg-4 col-form-label" for="tour-date">Tour Date <span class="text-danger">*</span></label>
                                             <div class="col-lg-6 mb-3 form-outline datepicker">
                                                 <input type="date" class="form-control" id="tour-date" name="tour-date" value="<?php echo htmlspecialchars($tour_date, ENT_QUOTES); ?>" placeholder="Select tour Date">
                                             </div>
@@ -203,9 +203,9 @@ include 'check_user_login.php';
 
 
                                     <div class="form-group row mb-3">
-                                        <label class="col-lg-4 col-form-label" for="desc">Remarks <span class="text-danger">*</span></label>
+                                        <label class="col-lg-4 col-form-label" for="desc">Description <span class="text-danger">*</span></label>
                                         <div class="col-lg-6">
-                                            <textarea rows="3" name="desc" id="desc" class="form-control" placeholder="Enter a Remarks.."><?php echo htmlspecialchars(trim($description), ENT_QUOTES); ?></textarea>
+                                            <textarea rows="3" name="desc" id="desc" class="form-control" placeholder="Enter a description.."><?php echo htmlspecialchars(trim($description), ENT_QUOTES); ?></textarea>
                                         </div>
                                     </div>
 

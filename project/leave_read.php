@@ -54,7 +54,7 @@ $role = $_SESSION['role'];
     }
 
     if ($action == 'faildelete') {
-        echo "<div class='alert alert-success'>The employee already has an applied, unable to delete.</div>";
+        echo "<div class='alert alert-danger'>The employee already has an applied, unable to delete.</div>";
     }
 
     if ($action == 'statusfail') {
@@ -106,6 +106,7 @@ $role = $_SESSION['role'];
                                     <thead>
                                         <tr>
                                             <th>Leave ID</th>
+                                            <th>User ID</th>
                                             <th>Leave Type</th>
                                             <th>Leave Category</th>
                                             <th>Leave Start Date</th>
@@ -130,6 +131,7 @@ $role = $_SESSION['role'];
             // creating a new table row per record
             echo "<tr>";
             echo "<td class='text-center'>{$leave_id}</td>";
+            echo "<td class='text-center'>{$user_id}</td>";
             echo "<td class='text-center'>{$leave_type}</td>";
             echo "<td>";
             if ($row['leave_category'] == 'Half Day') {
@@ -159,10 +161,10 @@ $role = $_SESSION['role'];
                 if ($role == 1) {
                     echo "<td>
                             <a href='leave_action.php?action=approve&id={$leave_id}' style='text-decoration: none;'>
-                                <button class='btn btn-success btn-sm m-1 fw-bold p-1 rounded' style='border: none;'>Approve</button>
+                                <button class='btn btn-success btn-sm m-1 fw-bold p-1 rounded' style='border: none;'>APPROVE</button>
                             </a>
                             <a href='leave_action.php?action=reject&id={$leave_id}' style='text-decoration: none;'>
-                                <button class='btn btn-danger btn-sm m-1 fw-bold p-1 rounded' style='border: none;'>Reject</button>
+                                <button class='btn btn-danger btn-sm m-1 fw-bold p-1 rounded' style='border: none;'>REJECT</button>
                             </a>
                         </td>";
                 } else {

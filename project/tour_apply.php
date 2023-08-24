@@ -19,6 +19,19 @@ $uid = $_SESSION['user_id']
 
 <body>
     <?php include 'topnav.php'; ?>
+    <?php
+    // At the beginning of your PHP script
+    error_reporting(E_ALL & ~E_NOTICE);
+
+    // Your code here
+    // ...
+
+    // On line 34 or wherever you're using "tour-type"
+    $tourType = isset($_POST['tour-type']) ? $_POST['tour-type'] : '';
+
+    // Rest of your code
+    // ...
+    ?>
     <section class="h-100 pt-3">
         <div class="container min-vh-100">
             <div class="row justify-content-center align-items-center h-100">
@@ -87,12 +100,22 @@ $uid = $_SESSION['user_id']
                             $error_msg .= "<div >Please make sure tour description are not empty.</div>";
                         }
 
+                        if ($end_date < $start_date) {
+                            $error_msg .= "<div >Please make sure end date is not earlier than start date.</div>";
+                        }
+
                         if (!empty($error_msg)) {
                             echo "<div class='alert alert-danger'>{$error_msg}</div>";
                         } else {
                             // include database connection
 
                             try {
+
+                                if ($role == 1) {
+                                    $assigned_user_id = $_POST['employee']; // Retrieve selected employee ID from POST
+
+                                }
+
                                 // insert query
                                 $query = "INSERT INTO `tour` (user_id, tour_type, tour_category, start_date, end_date, tour_date, time_period, description) VALUES (:user_id, :tour_type, :tour_category, :start_date, :end_date, :tour_date, :time_period, :desc)";
 
@@ -100,7 +123,12 @@ $uid = $_SESSION['user_id']
                                 $stmt = $con->prepare($query);
 
                                 // Bind parameters
-                                $stmt->bindParam(':user_id', $uid);
+                                if ($role == 1) {
+                                    $stmt->bindParam(':user_id', $assigned_user_id); // Use the selected employee ID
+                                } else {
+                                    $stmt->bindParam(':user_id', $uid);
+                                }
+
                                 $stmt->bindParam(':tour_type', $tour_type);
                                 $stmt->bindParam(':tour_category', $tour_cat);
                                 $stmt->bindParam(':start_date', $start_date);
@@ -111,7 +139,7 @@ $uid = $_SESSION['user_id']
 
                                 // Execute the query
                                 if ($stmt->execute()) {
-                                    
+
                                     //echo "<div class='alert alert-success'>Work Tour apply successfully.</div>";
                                     header("Location: tour_read.php?action=created");
                                 } else {
@@ -133,6 +161,42 @@ $uid = $_SESSION['user_id']
                             <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">Apply Tour</h3>
                             <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data">
                                 <div class="card-body ">
+
+
+                                    <?php if ($role == 1) : ?>
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="employee">Assign Employee</label>
+                                            <div class="col-lg-6 mb-3">
+                                                <!-- Replace the options and values with actual employee data -->
+                                                <select class="form-control" id="employee" name="employee">
+                                                    <option selected disabled>Select Employee</option>
+
+                                                    <?php
+                                                    // include database connection
+                                                    include 'config/database.php';
+                                                    $query = "SELECT user_id, username,firstname,lastname FROM employee";
+                                                    $stmt = $con->prepare($query);
+                                                    $stmt->execute();
+
+                                                    $num = $stmt->rowCount();
+                                                    if ($num > 0) {
+                                                        // table body will be here
+                                                        // retrieve our table contents
+                                                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                                            // extract row
+                                                            extract($row);
+                                                            $fullname = $firstname . ' ' . $lastname;
+                                                            // creating new table row per record
+                                                            echo "<option value=\"$user_id\">$fullname</option>";
+                                                        }
+                                                    }
+                                                    ?>
+                                                    <!-- ... More employee options ... -->
+                                                </select>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+
                                     <div class="form-group row">
                                         <label class="col-lg-4 col-form-label" for="tour-type">Tour Type <span class="text-danger">*</span></label>
                                         <div class="col-lg-6 mb-3">
@@ -161,14 +225,14 @@ $uid = $_SESSION['user_id']
 
                                     <div id="fullday" style="display: none;" class="mb-3 ">
                                         <div class="form-group row ">
-                                            <label class="col-lg-4 col-form-label" for="start-date">tour Start Date <span class="text-danger">*</span></label>
+                                            <label class="col-lg-4 col-form-label" for="start-date">Tour Start Date <span class="text-danger">*</span></label>
                                             <div class="col-lg-6 mb-3 form-outline datepicker">
                                                 <input type="date" class="form-control" name="start-date" placeholder="Select tour Start Date">
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="end-date">tour End Date <span class="text-danger">*</span></label>
+                                            <label class="col-lg-4 col-form-label" for="end-date">Tour End Date <span class="text-danger">*</span></label>
                                             <div class="col-lg-6 mb-3 form-outline datepicker">
                                                 <input type="date" class="form-control" name="end-date" placeholder="Select tour End Date">
                                             </div>
@@ -177,7 +241,7 @@ $uid = $_SESSION['user_id']
 
                                     <div id="halfday" style="display: none;" class="mb-3">
                                         <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label" for="tour-date">tour Date <span class="text-danger">*</span></label>
+                                            <label class="col-lg-4 col-form-label" for="tour-date">Tour Date <span class="text-danger">*</span></label>
                                             <div class="col-lg-6 mb-3 form-outline datepicker">
                                                 <input type="date" class="form-control" id="tour-date" name="tour-date" placeholder="Select tour Date">
                                             </div>
@@ -195,7 +259,7 @@ $uid = $_SESSION['user_id']
                                     </div>
 
                                     <div class="form-group row mb-3">
-                                        <label class="col-lg-4 col-form-label" for="desc">Remarks <span class="text-danger">*</span></label>
+                                        <label class="col-lg-4 col-form-label" for="desc">Description <span class="text-danger">*</span></label>
                                         <div class="col-lg-6">
                                             <textarea rows="3" name="desc" id="desc" class="form-control" placeholder="Enter a Remarks.."></textarea>
                                         </div>

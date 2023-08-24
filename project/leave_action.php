@@ -4,7 +4,6 @@ include 'check_user_login.php';
 $username = $_SESSION['login'];
 $uid = $_SESSION['user_id'];
 $role = $_SESSION['role'];
-$leave_duration = $_SESSION['leave_duration'] ; 
 ?>
 
 
@@ -22,14 +21,15 @@ $action = isset($_GET['action']) ? $_GET['action'] : "";
 
 if ($action == 'approve') {
     // Retrieve user_id and leave balance based on leave_id
-    $getUserQuery = "SELECT user_id FROM `leave` WHERE leave_id = :leave_id";
-    $getUserStmt = $con->prepare($getUserQuery);
-    $getUserStmt->bindParam(':leave_id', $leave_id);
+  $getLeaveQuery = "SELECT user_id, duration FROM `leave` WHERE leave_id = :leave_id";
+    $getLeaveStmt = $con->prepare($getLeaveQuery);
+    $getLeaveStmt->bindParam(':leave_id', $leave_id);
 
     // Execute the query to get user_id
-    if ($getUserStmt->execute()) {
-        $row = $getUserStmt->fetch(PDO::FETCH_ASSOC);
+    if ($getLeaveStmt->execute()) {
+        $row = $getLeaveStmt->fetch(PDO::FETCH_ASSOC);
         $user_id = $row['user_id'];
+        $leave_duration = $row['duration'];
 
         // Check leave balance before approving
         $checkBalanceQuery = "SELECT leave_bal FROM employee WHERE user_id = :user_id";
@@ -51,9 +51,7 @@ if ($action == 'approve') {
                 if ($approveStmt->execute()) {
 
                     $l = $leave_balance - $leave_duration;
-                    echo "1", $l ;
-                    echo "2",$leave_balance;
-                    echo "3",$leave_duration;
+                  
                     // Update employee leave balance
                     $updateQuery = "UPDATE employee SET leave_bal = $l  WHERE user_id = :user_id";
                     $updateStmt = $con->prepare($updateQuery);
@@ -61,7 +59,8 @@ if ($action == 'approve') {
 
                     // Execute the query to update leave balance
                     if ($updateStmt->execute()) {
-                        header("Location: leave_read.php?action=approved&id={$leave_id};");   
+                        header("Location: leave_read.php?action=approved&id={$leave_id};"); 
+                     
                     } else {
                         header("Location: leave_read.php?action=updatefail");
                     }

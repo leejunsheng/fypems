@@ -61,13 +61,13 @@ $role = $_SESSION['role'];
 
       $stmt5 = $con->prepare($query);
       $stmt5->execute();
-      $tourCount = $stmt->fetchColumn();
+      $tourCount = $stmt5->fetchColumn();
 
       // Query to fetch total employees
       $query = "SELECT * FROM employee";
       $stmt2 = $con->prepare($query);
       $stmt2->execute();
-      $employee = $stmt2->fetchColumn();
+      $employee = $stmt2->rowCount();
 
       // Query to fetch pending leave requests
       $query = "SELECT * FROM `leave` WHERE `leave`.`status` = 0;";

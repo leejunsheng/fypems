@@ -35,7 +35,7 @@ $role = $_SESSION['role'];
 
     // if it was redirected from delete.php
     if ($action == 'created') {
-        echo "<div class='alert alert-success'>employee was create successfully.</div>";
+        echo "<div class='alert alert-success'>Employee was create successfully.</div>";
     }
 
     if ($action == 'deleted') {
@@ -43,7 +43,11 @@ $role = $_SESSION['role'];
     }
 
     if ($action == 'faildelete') {
-        echo "<div class='alert alert-success'>The employee already has an applied, unable to delete.</div>";
+        echo "<div class='alert alert-danger'>The employee already has an applied on leave or work tour, unable to delete.</div>";
+    }
+
+    if ($action == 'faildeleteown') {
+        echo "<div class='alert alert-danger'>Your cannot delete yourself.</div>";
     }
 
 
@@ -59,10 +63,12 @@ $role = $_SESSION['role'];
 
 
     // link to create record form
-    echo "
+    if ($role == 1) {
+        echo "
             <div>
             <a href='employee_create.php' class='btn btn-primary m-b-1em my-3 ms-3'>  Create New employee <i class='fa-solid fa-plus mt-1'></i></a>
-          </div>";
+          </div> ";
+    }
 
     //check if more than 0 record found
     if ($num > 0) {

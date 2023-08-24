@@ -18,12 +18,12 @@ include 'config/database.php';
     <section class="h-100 pt-3">
         <div class="container-fluid px-0">
             <div class="container">
-
                 <?php
                 if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     $comment_subject = $_POST['subject'];
                     $comment_text = $_POST['comment'];
-                    $create_date = date('Y-m-d', strtotime('+7 days'));
+
+                    $create_date = date('Y-m-d');
 
                     $error_msg = "";
                     if ($comment_subject == "") {
@@ -39,7 +39,7 @@ include 'config/database.php';
                     } else {
                         try {
                             // insert query
-                            $query = "INSERT INTO comments (comment_subject, comment_text,create_date) VALUES (:comment_subject, :comment_text,:create_date)";
+                            $query = "INSERT INTO comments (comment_subject, comment_text) VALUES (:comment_subject, :comment_text)";
 
                             // Prepare the statement
                             $stmt = $con->prepare($query);
@@ -47,11 +47,12 @@ include 'config/database.php';
                             // Bind parameters
                             $stmt->bindParam(':comment_subject', $comment_subject);
                             $stmt->bindParam(':comment_text', $comment_text);
-                            $stmt->bindParam(':create_date', $create_date);
+
 
                             // Execute the query
                             if ($stmt->execute()) {
                                 echo "<div class='alert alert-success'>Notification added successfully.</div>";
+                                header('Location: notice_read.php?action=created');
                             } else {
                                 echo "<div class='alert alert-danger'>Unable to save record.</div>";
                             }
@@ -79,7 +80,7 @@ include 'config/database.php';
                                             <input type="text" name="subject" id="subject" class="form-control">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="comment" class="form-label">Enter Comment</label>
+                                            <label for="comment" class="form-label">Enter Message</label>
                                             <textarea name="comment" id="comment" class="form-control" rows="5"></textarea>
                                         </div>
                                         <div class="d-grid">

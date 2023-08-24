@@ -17,8 +17,8 @@ $updated = false;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve the posted data
     $old_password = $_POST['old_password'];
-    $new_password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
+    $new_password = md5($_POST['password']);
+    $confirm_password = md5($_POST['confirm_password']);
 
     // Validate old password
     $query = "SELECT password FROM `employee` WHERE user_id=:uid";
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query = "UPDATE employee SET password=:password WHERE user_id=:uid";
         $stmt = $con->prepare($query);
         $stmt->bindParam(':uid', $uid);
-        $stmt->bindParam(':password', md5($new_password));
+        $stmt->bindParam(':password', $new_password);
 
         if ($stmt->execute()) {
             $updated = true;

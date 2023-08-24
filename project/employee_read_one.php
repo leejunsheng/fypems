@@ -38,7 +38,7 @@ try {
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // values to fill up our form
-   extract($row);
+    extract($row);
     // shorter way to do that is extract($row)
 }
 
@@ -59,8 +59,8 @@ catch (PDOException $exception) {
                         <h4>User Profile</h4>
                     </div>
                     <div class="card-body">
-                        <table class="table table-bordered" >
-                          
+                        <table class="table table-bordered">
+
                             <tr>
                                 <td>Username</td>
                                 <td><?php echo htmlspecialchars($username, ENT_QUOTES); ?></td>
@@ -107,10 +107,15 @@ catch (PDOException $exception) {
                             <tr>
                                 <td></td>
                                 <td>
-                                    <a href='employee_update.php?user_id=<?php echo $user_id; ?>' class='btn btn-primary '>Edit <i class='fas fa-pen'></i></a>
-                                    <a href='#' onclick='printTable()' class='btn btn-primary m-b-1em my-3 mx-2'>Print Table <i class="fa-solid fa-print"></i></a>
-                                    <a href='employee_read.php' class='btn btn-secondary '><i class="fa-solid fa-circle-arrow-left"></i> Back to read employee </a>
-                               
+                                    <?php if ($role == 1) : ?>
+                                        <!-- If role is 1, show all buttons -->
+                                        <a href='employee_update.php?user_id=<?php echo $user_id; ?>' class='btn btn-primary '>Edit <i class='fas fa-pen'></i></a>
+                                        <a href='#' onclick='printTable()' class='btn btn-primary m-b-1em my-3 mx-2'>Print Table <i class='fa-solid fa-print'></i></a>
+                                        <a href='employee_read.php' class='btn btn-secondary '><i class='fa-solid fa-circle-arrow-left'></i> Back to read employee </a>
+                                    <?php elseif ($role == 0) : ?>
+                                        <!-- If role is 0, show only the "Edit" button -->
+                                        <a href='employee_update.php?user_id=<?php echo $user_id; ?>' class='btn btn-primary '>Edit <i class='fas fa-pen'></i></a>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         </table>
@@ -121,7 +126,7 @@ catch (PDOException $exception) {
     </div>
     <!-- Add Font Awesome CSS link for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
- 
+
 
     <?php include 'script.php'; ?>
 

@@ -17,6 +17,19 @@ $uid = $_SESSION['user_id'];
 
 <body>
     <?php include 'topnav.php'; ?>
+    <?php
+    // At the beginning of your PHP script
+    error_reporting(E_ALL & ~E_NOTICE);
+
+    // Your code here
+    // ...
+
+    // On line 34 or wherever you're using "tour-type"
+    $tourType = isset($_POST['tour-type']) ? $_POST['tour-type'] : '';
+
+    // Rest of your code
+    // ...
+    ?>
     <section class="h-100 pt-3">
         <div class="container min-vh-100">
             <div class="row justify-content-center align-items-center h-100">
@@ -37,8 +50,6 @@ $uid = $_SESSION['user_id'];
                         $time_period = isset($_POST['time-period']) ? $_POST['time-period'] : null;
                         $desc = $_POST['desc'];
 
-
-
                         if (empty($start_date)) {
                             $start_date = null;
                         }
@@ -54,6 +65,7 @@ $uid = $_SESSION['user_id'];
                         if (empty($time_period)) {
                             $time_period = null;
                         }
+
 
                         $error_msg = "";
 
@@ -79,7 +91,7 @@ $uid = $_SESSION['user_id'];
                         $leave_balance = $stmt2->rowCount();
 
                         if ($leave_balance > 0) {
-                            $error_msg .= "<div >Your leave balance not enough.</div>";
+                            $error_msg .= "<div >Your leave balance is currently 0.</div>";
                         }
 
                         if ($leave_type == "") {
@@ -90,10 +102,25 @@ $uid = $_SESSION['user_id'];
                             $error_msg .= "<div >Please make sure leave category are not empty.</div>";
                         }
 
-
+                        if ($end_date < $start_date) {
+                            $error_msg .= "<div >Please make sure end date is not earlier than start date.</div>";
+                        }
 
                         if ($desc == "") {
                             $error_msg .= "<div >Please make sure leave description are not empty.</div>";
+                        }
+
+                        $leave_duration = 0; // Initialize leave duration
+
+                        if ($leave_cat == "Full Day") {
+                            // Calculate leave duration for full day leave
+                            $start_date_obj = new DateTime($start_date);
+                            $end_date_obj = new DateTime($end_date);
+                            $interval = $start_date_obj->diff($end_date_obj);
+                            $leave_duration = $interval->days + 1; // Adding 1 to include both start and end days
+                        } elseif ($leave_cat == "Half Day") {
+                            // Calculate leave duration for half day leave
+                            $leave_duration = 0.5; // Half day
                         }
 
                         if (!empty($error_msg)) {
@@ -103,7 +130,7 @@ $uid = $_SESSION['user_id'];
 
                             try {
                                 // insert query
-                                $query = "INSERT INTO `leave` (user_id, leave_type, leave_category, start_date, end_date, leave_date, time_period, description) VALUES (:user_id, :leave_type, :leave_category, :start_date, :end_date, :leave_date, :time_period, :desc)";
+                                $query = "INSERT INTO `leave` (user_id, leave_type, leave_category, start_date, end_date, leave_date, time_period, description,duration) VALUES (:user_id, :leave_type, :leave_category, :start_date, :end_date, :leave_date, :time_period, :desc,:leave_duration)";
 
                                 // Prepare the statement
                                 $stmt = $con->prepare($query);
@@ -117,28 +144,13 @@ $uid = $_SESSION['user_id'];
                                 $stmt->bindParam(':leave_date', $leave_date);
                                 $stmt->bindParam(':time_period', $time_period);
                                 $stmt->bindParam(':desc', $desc);
+                                $stmt->bindParam(':leave_duration', $leave_duration);
 
                                 // Execute the query
                                 if ($stmt->execute()) {
-                                    // Calculate leave duration based on leave type and category
-                                    $leave_duration = 0; // Initialize leave duration
-
-                                    if ($leave_cat == "Full Day") {
-                                        // Calculate leave duration for full day leave
-                                        $start_date_obj = new DateTime($start_date);
-                                        $end_date_obj = new DateTime($end_date);
-                                        $interval = $start_date_obj->diff($end_date_obj);
-                                        $leave_duration = $interval->days + 1; // Adding 1 to include both start and end days
-                                    } elseif ($leave_cat == "Half Day") {
-                                        // Calculate leave duration for half day leave
-                                        $leave_duration = 0.5; // Half day
-                                    }
-
-                                    $_SESSION['leave_duration'] = $leave_duration; // Store leave duration in session
-
                                     //echo "<div class='alert alert-success'>Leave added successfully.</div>";
-                                    //header("Location: leave_read.php?action=created");
-                                    echo $leave_duration;
+                                    header("Location: leave_read.php?action=created");
+                                    // echo $leave_duration;
                                 } else {
                                     echo "<div class='alert alert-danger'>Unable to save record.</div>";
                                 }
@@ -151,6 +163,7 @@ $uid = $_SESSION['user_id'];
                     }
                     ?>
 
+
                     <!-- html form here where the product information will be entered -->
                     <div class="card" style="border-radius: 15px; ">
                         <div class="card-body p-4 p-md-5 ">
@@ -162,11 +175,11 @@ $uid = $_SESSION['user_id'];
                                         <div class="col-lg-6 mb-3">
                                             <select class="form-control" id="leave-type" name="leave-type">
                                                 <option selected="true" disabled>Select Leave Type</option>
-                                                <option value="CL">CL</option>
-                                                <option value="EL">EL</option>
-                                                <option value="RH">RH</option>
-                                                <option value="HPL">HPL</option>
-                                                <option value="CCL">CCL</option>
+                                                <option value="CL">Casual Leave</option>
+                                                <option value="EL">Earned Leave</option>
+                                                <option value="RH">Restricted Holiday</option>
+                                                <option value="HPL">Half Pay Leave</option>
+                                                <option value="CCL">Child Care Leave</option>
                                                 <option value="Others">Others</option>
                                             </select>
                                         </div>
@@ -219,9 +232,9 @@ $uid = $_SESSION['user_id'];
                                     </div>
 
                                     <div class="form-group row mb-3">
-                                        <label class="col-lg-4 col-form-label" for="desc">Remarks <span class="text-danger">*</span></label>
+                                        <label class="col-lg-4 col-form-label" for="desc">Description <span class="text-danger">*</span></label>
                                         <div class="col-lg-6">
-                                            <textarea rows="3" name="desc" id="desc" class="form-control" placeholder="Enter a Remarks.."></textarea>
+                                            <textarea rows="3" name="desc" id="desc" class="form-control" placeholder="Enter a description."></textarea>
                                         </div>
                                     </div>
 

@@ -52,7 +52,7 @@ $role = $_SESSION['role'];
     }
 
     if ($action == 'faildelete') {
-        echo "<div class='alert alert-success'>The employee already has an applied, unable to delete.</div>";
+        echo "<div class='alert alert-danger'>The employee already has an applied, unable to delete.</div>";
     }
 
     // select all data
@@ -68,6 +68,7 @@ $role = $_SESSION['role'];
     $num = $stmt->rowCount();
 
     // link to create record form
+    
     echo "
     <div>
         <a href='tour_apply.php' class='btn btn-primary m-b-1em my-3 ms-3'> Apply Tour <i class='fa-solid fa-plus mt-1'></i></a>
@@ -87,6 +88,7 @@ $role = $_SESSION['role'];
                                     <thead>
                                         <tr>
                                             <th>Tour ID</th>
+                                            <th>User ID</th>
                                             <th>Tour Type</th>
                                             <th>Tour Category</th>
                                             <th>Tour Start Date</th>
@@ -111,6 +113,7 @@ $role = $_SESSION['role'];
             // creating a new table row per record
             echo "<tr>";
             echo "<td class='text-center'>{$tour_id}</td>";
+            echo "<td class='text-center'>{$user_id}</td>";
             echo "<td class='text-center'>{$tour_type}</td>";
             echo "<td>";
             if ($row['tour_category'] == 'Half Day') {

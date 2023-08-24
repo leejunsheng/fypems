@@ -63,6 +63,7 @@ include 'check_user_login.php';
                 $end_date = $row['end_date'];
                 $leave_date = $row['leave_date'];
                 $time_period = $row['time_period'];
+                $description = $row['description'];
                 $status = $row['status'];
                 $entry_date = $row['entry_date'];
                 $firstname = $row['firstname'];
@@ -122,6 +123,11 @@ include 'check_user_login.php';
                 }
                 ?>
 
+<tr>
+                    <td>Description</td>
+                    <td><?php echo htmlspecialchars($description, ENT_QUOTES);  ?></td>
+                </tr>
+                
                 <tr>
                     <td>Status</td>
                     <td><?php

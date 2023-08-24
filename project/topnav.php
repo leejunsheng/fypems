@@ -10,6 +10,7 @@ $role = $_SESSION['role'];
     <nav id="sidebar">
         <div class="sidebar-header">
             <h5 class="ms-4">Welcome, <?php echo $_SESSION['login']; ?></h5>
+       
         </div>
 
 
@@ -46,7 +47,7 @@ $role = $_SESSION['role'];
                         <a class="nav-link text-decoration-none" href="tour_apply.php">Apply Work Tour</a>
                     </li>
                     <li>
-                        <a class="nav-link text-decoration-none" href="tour_read.php">Work Tour List</a>
+                        <a class="nav-link text-decoration-none" href="tour_read.php">Work Tour Record</a>
                     </li>
 
                 </ul>
@@ -59,7 +60,7 @@ $role = $_SESSION['role'];
                         <a class="nav-link text-decoration-none" href="leave_apply.php">Apply Leave</a>
                     </li>
                     <li>
-                        <a class="nav-link text-decoration-none" href="leave_read.php">Leave List</a>
+                        <a class="nav-link text-decoration-none" href="leave_read.php">Leave Record</a>
                     </li>
 
                 </ul>

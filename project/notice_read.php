@@ -18,6 +18,15 @@ include 'config/database.php';
         <div class="container">
             <?php
             // Get current date
+            
+            $action = isset($_GET['action']) ? $_GET['action'] : "";
+
+            // if it was redirected from delete.php
+            if ($action == 'created') {
+            echo "<div class='alert alert-success'>Notice create successfully.</div>";
+            }
+
+            
             $today = date('Y-m-d');
 
             // Query to fetch employees on leave today
@@ -94,7 +103,7 @@ include 'config/database.php';
 
             <?php
             // Fetch comments from the database
-            $query = "SELECT * FROM comments";
+            $query = "SELECT * FROM comments  ORDER BY comment_id DESC";
             $stmt = $con->prepare($query);
             $stmt->execute();
             $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -115,7 +124,7 @@ include 'config/database.php';
                     </div>";
                 }
             } else {
-                echo "<div class='alert alert-info'>No comments found.</div>";
+                echo "<div class='alert alert-info'>No notice found.</div>";
             }
             ?>
         </div>

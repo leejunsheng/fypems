@@ -65,6 +65,7 @@ include 'check_user_login.php';
                 $time_period = $row['time_period'];
                 $status = $row['status'];
                 $entry_date = $row['entry_date'];
+                $description = $row['description'];
                 $firstname = $row['firstname'];
                 $lastname = $row['lastname'];
                 // shorter way to do that is extract($row)
@@ -89,12 +90,12 @@ include 'check_user_login.php';
                 </tr>
 
                 <tr>
-                    <td>tour Type</td>
+                    <td>Tour Type</td>
                     <td><?php echo htmlspecialchars($tour_type, ENT_QUOTES);  ?></td>
                 </tr>
 
                 <tr>
-                    <td>tour Category</td>
+                    <td>Tour Category</td>
                     <td><?php echo htmlspecialchars($tour_category, ENT_QUOTES);  ?></td>
                 </tr>
 
@@ -112,7 +113,7 @@ include 'check_user_login.php';
                 } else {
                     echo "
                 <tr>
-                <td>tour Date</td>
+                <td>Tour Date</td>
                 <td>" . htmlspecialchars($tour_date, ENT_QUOTES) . "</td>
                 </tr>
                 <tr>
@@ -121,6 +122,12 @@ include 'check_user_login.php';
                 </tr>";
                 }
                 ?>
+
+<tr>
+                    <td>Description</td>
+                    <td><?php echo htmlspecialchars($description, ENT_QUOTES);  ?></td>
+                </tr>
+                
 
                 <tr>
                     <td>Status</td>

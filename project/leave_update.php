@@ -202,9 +202,9 @@ include 'check_user_login.php';
 
 
                                     <div class="form-group row mb-3">
-                                        <label class="col-lg-4 col-form-label" for="desc">Remarks <span class="text-danger">*</span></label>
+                                        <label class="col-lg-4 col-form-label" for="desc">Description <span class="text-danger">*</span></label>
                                         <div class="col-lg-6">
-                                            <textarea rows="3" name="desc" id="desc" class="form-control" placeholder="Enter a Remarks.."><?php echo htmlspecialchars(trim($description), ENT_QUOTES); ?></textarea>
+                                            <textarea rows="3" name="desc" id="desc" class="form-control" placeholder="Enter a description."><?php echo htmlspecialchars(trim($description), ENT_QUOTES); ?></textarea>
                                         </div>
                                     </div>
 
