@@ -30,7 +30,7 @@ if ($action == 'approve') {
 
     // Execute the query
     if ($stmt->execute()) {
-        //echo "<div class='alert alert-success'>tour apply was approved.</div>";
+        //echo "<div class='alert alert-success'>Tour apply was approved.</div>";
         header("Location: tour_read.php?action=approved&id={$tour_id}");
     } else {
         echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
@@ -46,7 +46,7 @@ if ($action == 'approve') {
 
     // Execute the query
     if ($stmt->execute()) {
-        //echo "<div class='alert alert-success'>tour apply was rejected.</div>";
+        //echo "<div class='alert alert-success'>Tour apply was rejected.</div>";
         header("Location: tour_read.php?action=rejected&id={$tour_id}");
     } else {
         echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";

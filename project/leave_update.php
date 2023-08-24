@@ -213,7 +213,7 @@ include 'check_user_login.php';
                                         <div class="text-end ">
                                         <input type='submit' value='Update' class='btn btn-primary' />
 
-                                        <a href=tour_read.php class='btn btn-secondary m-r-1em mx-2'><i class="fa-solid fa-circle-arrow-left"></i> Back to read tour</a>
+                                        <a href=leave_read.php class='btn btn-secondary m-r-1em mx-2'><i class="fa-solid fa-circle-arrow-left"></i> Back to read leave</a>
                                         </div>
 
                                         

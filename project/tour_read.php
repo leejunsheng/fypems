@@ -28,7 +28,7 @@ $role = $_SESSION['role'];
     include 'config/database.php';
 
     if (isset($_GET['update'])) {
-        echo "<div class='alert alert-success'>tour Record was updated.</div>";
+        echo "<div class='alert alert-success'>Tour Record was updated.</div>";
     }
 
     // delete message prompt will be here

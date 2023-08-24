@@ -75,84 +75,69 @@ $uid = $_SESSION['user_id']
                         // If any tour record is found for the current date, it displays an error message indicating that the date has already been applied for leave.
                         $today = date('Y-m-d');
                         $query = "SELECT *
-                        FROM `tour` AS l
-                        JOIN `employee` AS e ON l.user_id = e.user_id
-                        WHERE e.user_id = :user_id
-                        AND ('$start_date'  AND  '$end_date' BETWEEN l.start_date AND l.end_date OR '$tour_date' = l.tour_date)";
-
+                                  FROM `tour` AS l
+                                  JOIN `employee` AS e ON l.user_id = e.user_id
+                                  WHERE e.user_id = :user_id
+                                  AND ('$start_date' BETWEEN l.start_date AND l.end_date OR '$tour_date' = l.tour_date)";
+                        
                         $stmt1 = $con->prepare($query);
                         $stmt1->bindParam(':user_id', $uid);
                         $stmt1->execute();
                         $alreadyapply = $stmt1->rowCount();
                         if ($alreadyapply > 0) {
-                            $error_msg .= "<div >The date already been apply.</div>";
+                            $error_msg .= "<div>The date has already been applied.</div>";
                         }
-
+                        
+                        // Additional checks and validations
                         if ($tour_type == "") {
-                            $error_msg .= "<div >Please make sure tour type are not empty.</div>";
+                            $error_msg .= "<div>Please make sure tour type is not empty.</div>";
                         }
-
+                        
                         if ($tour_cat == "") {
-                            $error_msg .= "<div >Please make sure tour category are not empty.</div>";
+                            $error_msg .= "<div>Please make sure tour category is not empty.</div>";
                         }
-
+                        
                         if ($desc == "") {
-                            $error_msg .= "<div >Please make sure tour description are not empty.</div>";
+                            $error_msg .= "<div>Please make sure tour description is not empty.</div>";
                         }
-
+                        
                         if ($end_date < $start_date) {
-                            $error_msg .= "<div >Please make sure end date is not earlier than start date.</div>";
+                            $error_msg .= "<div>Please make sure end date is not earlier than start date.</div>";
                         }
-
+                        
                         if (!empty($error_msg)) {
                             echo "<div class='alert alert-danger'>{$error_msg}</div>";
                         } else {
                             // include database connection
-
+                        
                             try {
-
                                 if ($role == 1) {
                                     $assigned_user_id = $_POST['employee']; // Retrieve selected employee ID from POST
-
+                        
+                                    // Duplicate date check for admin-assigned users
+                                    $query = "SELECT *
+                                              FROM `tour` AS l
+                                              JOIN `employee` AS e ON l.user_id = e.user_id
+                                              WHERE e.user_id = :assigned_user_id
+                                              AND ('$start_date' BETWEEN l.start_date AND l.end_date OR '$tour_date' = l.tour_date)";
+                        
+                                    $stmt2 = $con->prepare($query);
+                                    $stmt2->bindParam(':assigned_user_id', $assigned_user_id);
+                                    $stmt2->execute();
+                                    $alreadyapply1 = $stmt2->rowCount();
+                                    if ($alreadyapply1 > 0) {
+                                        $error_msg .= "<div>The date has already been applied for the assigned user.</div>";
+                                        echo "<div class='alert alert-danger'>{$error_msg}</div>";
+                                    }
                                 }
-
-                                // insert query
-                                $query = "INSERT INTO `tour` (user_id, tour_type, tour_category, start_date, end_date, tour_date, time_period, description) VALUES (:user_id, :tour_type, :tour_category, :start_date, :end_date, :tour_date, :time_period, :desc)";
-
-                                // Prepare the statement
-                                $stmt = $con->prepare($query);
-
-                                // Bind parameters
-                                if ($role == 1) {
-                                    $stmt->bindParam(':user_id', $assigned_user_id); // Use the selected employee ID
-                                } else {
-                                    $stmt->bindParam(':user_id', $uid);
-                                }
-
-                                $stmt->bindParam(':tour_type', $tour_type);
-                                $stmt->bindParam(':tour_category', $tour_cat);
-                                $stmt->bindParam(':start_date', $start_date);
-                                $stmt->bindParam(':end_date', $end_date);
-                                $stmt->bindParam(':tour_date', $tour_date);
-                                $stmt->bindParam(':time_period', $time_period);
-                                $stmt->bindParam(':desc', $desc);
-
-                                // Execute the query
-                                if ($stmt->execute()) {
-
-                                    //echo "<div class='alert alert-success'>Work Tour apply successfully.</div>";
-                                    header("Location: tour_read.php?action=created");
-                                } else {
-                                    echo "<div class='alert alert-danger'>Unable to save record.</div>";
-                                }
-                            }
-                            // show error
-                            catch (PDOException $exception) {
+                                
+                            } catch (PDOException $exception) {
                                 die('ERROR: ' . $exception->getMessage());
                             }
                         }
-                    }
-                    ?>
+                        
+                        
+                    }?>                        
 
                     <!-- html form here where the product information will be entered -->
 

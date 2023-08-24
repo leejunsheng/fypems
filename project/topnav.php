@@ -30,7 +30,7 @@ $role = $_SESSION['role'];
                     <ul class="collapse list-unstyled" id="pagemenu">
 
                         <li>
-                            <a class="nav-link text-decoration-none" href="employee_create.php">Create employee</a>
+                            <a class="nav-link text-decoration-none" href="employee_create.php">Create Employee</a>
                         </li>
 
                         <li>
@@ -82,7 +82,6 @@ $role = $_SESSION['role'];
 
             <li>
                 <?php
-             
                 echo "<a class='nav-link text-decoration-none' href='password_update.php?user_id=$uid'>Change Password <i class='fa-solid fa-key'></i></a>";
                 ?>
             </li>

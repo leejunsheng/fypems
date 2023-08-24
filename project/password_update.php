@@ -1,4 +1,3 @@
-
 <?php
 // Check if the user is logged in and if not, redirect to the login page
 include 'check_user_login.php';
@@ -32,9 +31,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error_msg = "<div class='alert alert-danger'>Wrong Old Password.</div>";
     } elseif ($new_password !== $confirm_password) {
         $error_msg = "<div class='alert alert-danger'>Confirm Password and New Password do not match.</div>";
-    } elseif (strlen($new_password) < 8 || !preg_match('/[a-z]/', $new_password) || !preg_match('/[0-9]/', $new_password)) {
-        $error_msg = "<div class='alert alert-danger'>Please make sure the New Password is at least 8 characters long, contains both letters and numbers.</div>";
-    } else {
+    } elseif (strlen($new_password) < 8) {
+        $error_msg .= "<div >Please make sure password less than 8 character.</div>";
+    } elseif (!preg_match('/[a-z]/', $new_password)) {
+        $error_msg .= "<div >Please make sure password combine capital a-z.</div>";
+    } elseif (!preg_match('/[0-9]/', $new_password)) {
+        $error_msg .= "<div >Please make sure password combine 0-9.</div>";
+    } 
+    
+    if (!empty($error_msg)) {
+        echo "<div class='alert alert-danger'>{$error_msg}</div>";
+    }
+    else {
         // Update the password in the database
         $query = "UPDATE employee SET password=:password WHERE user_id=:uid";
         $stmt = $con->prepare($query);

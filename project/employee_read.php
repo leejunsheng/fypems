@@ -66,7 +66,7 @@ $role = $_SESSION['role'];
     if ($role == 1) {
         echo "
             <div>
-            <a href='employee_create.php' class='btn btn-primary m-b-1em my-3 ms-3'>  Create New employee <i class='fa-solid fa-plus mt-1'></i></a>
+            <a href='employee_create.php' class='btn btn-primary m-b-1em my-3 ms-3'>  Create New Employee <i class='fa-solid fa-plus mt-1'></i></a>
           </div> ";
     }
 

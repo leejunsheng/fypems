@@ -101,6 +101,10 @@ $uid = $_SESSION['user_id'];
                         $error_msg .= "<div> User need 18 years old and above. </div>";
                     }
 
+                    if ($department == "") {
+                        $error_msg .= "<div>Please make sure department are not empty.</div>";
+                    }
+
                     if ($accstatus == "") {
                         $error_msg .= "<div>Please make sure account status are not empty.</div>";
                     }
@@ -198,11 +202,12 @@ $uid = $_SESSION['user_id'];
                             $lastname = htmlspecialchars(strip_tags($_POST['lastname']));
                             $datebirth = htmlspecialchars(strip_tags($_POST['datebirth']));
                             $department = htmlspecialchars(strip_tags($_POST['department']));
-                            if($role1){
+
+                            if ($role1) {
                                 $leave_bal = htmlspecialchars(strip_tags($_POST['leave_bal']));
+                                $accstatus = htmlspecialchars(strip_tags($_POST['accstatus']));
                             }
-                           
-            
+
                             // bind the parameters
                             $stmt->bindParam(':username', $username);
                             $stmt->bindParam(':image', $image);
@@ -214,13 +219,16 @@ $uid = $_SESSION['user_id'];
                             $stmt->bindParam(':department', $department);
                             $stmt->bindParam(':accstatus', $accstatus);
                             $stmt->bindParam(':leave_bal', $leave_bal);
-                        
+
 
                             // Execute the query
                             if ($stmt->execute()) {
+
+                             
                                 //echo "<div class='alert alert-success'>Record was updated.</div>";
                                 header("Location: employee_read.php?update={$user_id}");
                                 exit(); // or die();
+                                
                             } else {
                                 echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
                             }
@@ -262,10 +270,22 @@ $uid = $_SESSION['user_id'];
                                     ?>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>Department</td>
-                                <td><input type='text' name='department' value="<?php echo htmlspecialchars($department, ENT_QUOTES); ?> " class='form-control' /></td>
-                            </tr>
+
+                            <td>Department</td>
+                            <td>
+                                <select class="form-control w-100" id="department" name="department">
+                                    <?php
+                                    $departments = array("IT", "HR", "Account", "Marketting");
+
+                                    foreach ($departments as $dept) {
+                                        $selected = ($department === $dept) ? "selected='selected'" : "";
+                                        echo "<option value='$dept' $selected>$dept</option>";
+                                    }
+                                    ?>
+                                </select>
+
+                            </td>
+
                             <tr>
                                 <td>First Name</td>
                                 <td><input type='text' name='firstname' value="<?php echo htmlspecialchars($firstname, ENT_QUOTES);  ?>" class='form-control' /></td>
@@ -292,7 +312,7 @@ $uid = $_SESSION['user_id'];
                                         <input type='text' name='leave_bal' value="<?php echo htmlspecialchars($leave_bal, ENT_QUOTES); ?>" class='form-control' />
                                     <?php else : ?>
                                         <!-- User can only view leave balance -->
-                                   
+
                                         <input type="text" name="leave_bal" value="<?php echo htmlspecialchars($leave_bal, ENT_QUOTES); ?>" class='form-control' disabled>
                                     <?php endif; ?>
                                 </td>
@@ -313,6 +333,7 @@ $uid = $_SESSION['user_id'];
                                         <label class="form-check-label" for="inactive">
                                             Inactive
                                         </label>
+
                                     <?php else : ?>
                                         <input type="text" name="accstatus" value="<?php echo $accstatus; ?>" class='form-control' disabled>
                                     <?php endif; ?>

@@ -97,9 +97,6 @@ session_start();
                                     </div>
                                     <button class="btn btn-outline-primary text-white btn-lg px-5" type="submit">Login</button>
 
-                                    <div class="pt-3">
-                                        <a href="employee_create.php">Dont' have an account? Register Now !</a>
-                                    </div>
                                 </form>
 
                             </div>
