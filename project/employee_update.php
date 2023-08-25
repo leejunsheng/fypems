@@ -66,6 +66,8 @@ $uid = $_SESSION['user_id'];
                 if ($_POST) {
                     $firstname = $_POST['firstname'];
                     $lastname = $_POST['lastname'];
+                    $phone = $_POST['phone'];
+                    $email = $_POST['email'];
                     $department = $_POST['department'];
                     $datebirth = $_POST['datebirth'];
                     $today = date("Ymd");
@@ -107,6 +109,14 @@ $uid = $_SESSION['user_id'];
 
                     if ($accstatus == "") {
                         $error_msg .= "<div>Please make sure account status are not empty.</div>";
+                    }
+
+                    if ($phone == "") {
+                        $error_msg .= "<div >Please make sure firstname are not empty.</div>";
+                    }
+
+                    if ($email == "") {
+                        $error_msg .= "<div >Please make sure lastname are not empty.</div>";
                     }
 
                     // now, if image is not empty, try to upload the image
@@ -192,7 +202,7 @@ $uid = $_SESSION['user_id'];
                             // write update query
                             // in this case, it seemed like we have so many fields to pass and
                             // it is better to label them and not use question marks
-                            $query = "UPDATE employee SET username=:username, image=:image, firstname=:firstname, lastname=:lastname, gender=:gender, datebirth=:datebirth, accstatus=:accstatus, department=:department, leave_bal=:leave_bal WHERE user_id = :user_id";
+                            $query = "UPDATE employee SET username=:username, image=:image, firstname=:firstname, lastname=:lastname, gender=:gender, datebirth=:datebirth, accstatus=:accstatus, department=:department, leave_bal=:leave_bal,phone=:phone,email=:email WHERE user_id = :user_id";
                             // prepare query for excecution
                             $stmt = $con->prepare($query);
 
@@ -200,6 +210,8 @@ $uid = $_SESSION['user_id'];
                             $image = htmlspecialchars(strip_tags($image));
                             $firstname = htmlspecialchars(strip_tags($_POST['firstname']));
                             $lastname = htmlspecialchars(strip_tags($_POST['lastname']));
+                            $phone = htmlspecialchars(strip_tags($_POST['phone']));
+                            $email = htmlspecialchars(strip_tags($_POST['email']));
                             $datebirth = htmlspecialchars(strip_tags($_POST['datebirth']));
                             $department = htmlspecialchars(strip_tags($_POST['department']));
 
@@ -213,6 +225,8 @@ $uid = $_SESSION['user_id'];
                             $stmt->bindParam(':image', $image);
                             $stmt->bindParam(':firstname', $firstname);
                             $stmt->bindParam(':lastname', $lastname);
+                            $stmt->bindParam(':phone', $phone);
+                            $stmt->bindParam(':email', $email);
                             $stmt->bindParam(':gender', $gender);
                             $stmt->bindParam(':datebirth', $datebirth);
                             $stmt->bindParam(':user_id', $user_id);
@@ -294,6 +308,16 @@ $uid = $_SESSION['user_id'];
                                 <td>Last Name</td>
                                 <td><input type='text' name='lastname' value="<?php echo htmlspecialchars($lastname, ENT_QUOTES);  ?>" class='form-control' /></td>
                             </tr>
+
+                            <tr>
+                                <td>Phone Number</td>
+                                <td><input type='text' name='phone' value="<?php echo htmlspecialchars($phone, ENT_QUOTES);  ?>" class='form-control' /></td>
+                            </tr>
+                            <tr>
+                                <td>Email</td>
+                                <td><input type='email' name='email' value="<?php echo htmlspecialchars($email, ENT_QUOTES);  ?>" class='form-control' /></td>
+                            </tr>
+
                             <tr>
                                 <td>Gender</td>
                                 <td><input type='text' name='gender' value="<?php echo htmlspecialchars($gender, ENT_QUOTES);  ?>" class='form-control' disabled /></td>

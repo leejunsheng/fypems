@@ -85,6 +85,15 @@ catch (PDOException $exception) {
                                 <td><?php echo htmlspecialchars($lastname, ENT_QUOTES); ?></td>
                             </tr>
                             <tr>
+                                <td>Phone Number</td>
+                                <td><?php echo htmlspecialchars($phone, ENT_QUOTES); ?></td>
+                            </tr>
+
+                            <tr>
+                                <td>Email</td>
+                                <td><?php echo htmlspecialchars($email, ENT_QUOTES); ?></td>
+                            </tr>
+                            <tr>
                                 <td>Gender</td>
                                 <td><?php echo htmlspecialchars($gender, ENT_QUOTES); ?></td>
                             </tr>

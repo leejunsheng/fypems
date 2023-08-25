@@ -23,7 +23,7 @@ if (isset($_SESSION["login"])) {
                     <!-- container -->
                     <!-- PHP insert code will be here -->
                     <?php
-                    $user_name = $image = $firstname = $lastname =  $gender = $datebirth = $role = $accstatus = $department = $leave_bal = "";
+                    $user_name = $image = $firstname = $lastname =  $gender = $datebirth = $role = $accstatus = $department = $leave_bal = $phone = $email = "";
 
                     if ($_POST) {
                         $user_name = $_POST['username'];
@@ -34,6 +34,8 @@ if (isset($_SESSION["login"])) {
                         $gender =  !empty($_POST['gender']) ? $_POST['gender'] : "";
                         $datebirth = $_POST['datebirth'];
                         $leave_bal = $_POST['leave_bal'];
+                        $phone = $_POST['phone'];
+                        $email = $_POST['email'];
                         $role = $_POST['role'];
                         $department = !empty($_POST['department']) ? $_POST['department'] : "";
                         $accstatus = !empty($_POST['accstatus']) ? $_POST['accstatus'] : "";
@@ -103,6 +105,14 @@ if (isset($_SESSION["login"])) {
                             $error_msg .= "<div>Please select your department.</div>";
                         }
 
+                        if ($phone == "") {
+                            $error_msg .= "<div >Please make sure firstname are not empty.</div>";
+                        }
+
+                        if ($email == "") {
+                            $error_msg .= "<div >Please make sure lastname are not empty.</div>";
+                        }
+
                         // now, if image is not empty, try to upload the image
                         if ($image) {
 
@@ -162,7 +172,7 @@ if (isset($_SESSION["login"])) {
                             include 'config/database.php';
                             try {
                                 // insert query
-                                $query = "INSERT INTO employee SET username=:username, image=:image, password=:password, firstname=:firstname, lastname=:lastname,gender=:gender,datebirth=:datebirth,registration_dt=:registration_dt,role=:role,department=:department,accstatus=:accstatus,leave_bal=:leave_bal";
+                                $query = "INSERT INTO employee SET username=:username, image=:image, password=:password, firstname=:firstname, lastname=:lastname,gender=:gender,datebirth=:datebirth,registration_dt=:registration_dt,role=:role,department=:department,accstatus=:accstatus,leave_bal=:leave_bal,phone=:phone,email=:email";
 
                                 // prepare query for execution
                                 $stmt = $con->prepare($query);
@@ -180,6 +190,8 @@ if (isset($_SESSION["login"])) {
                                 $stmt->bindParam(':role', $role);
                                 $stmt->bindParam(':department', $department);
                                 $stmt->bindParam(':leave_bal', $leave_bal);
+                                $stmt->bindParam(':phone', $phone);
+                                $stmt->bindParam(':email', $email);
                                 $stmt->bindParam(':accstatus', $accstatus);
 
                                 // Execute the query
@@ -241,6 +253,24 @@ if (isset($_SESSION["login"])) {
                                             <label class="form-label" for="lastName">Last Name</label>
                                         </div>
 
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="col-md-12 mb-4">
+                                        <div class="form-outline">
+                                            <input input type='text' name='phone' value='<?php echo $phone ?>' class="form-control form-control-lg" 
+                                            placeholder="Phone Number"/>
+                                            <label class="form-label">Phone Number</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="col-md-12 mb-4">
+                                        <div class="form-outline">
+                                            <input input type='email' name='email' value='<?php echo $email ?>' class="form-control form-control-lg "
+                                            placeholder="Email" />
+                                            <label class="form-label">Email</label>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -331,17 +361,15 @@ if (isset($_SESSION["login"])) {
                                         </div>
 
                                         <div class="col-md-6 mb-4">
-    <h6 class="mb-2 pb-1">Leave Balance </h6>
-    <select class="form-select" name="leave_bal">
-        <?php
-        for ($i = 1; $i <= 20; $i++) {
-            echo "<option value='$i'>$i</option>";
-        }
-        ?>
-    </select>
-</div>
-
-
+                                            <h6 class="mb-2 pb-1">Leave Balance </h6>
+                                            <select class="form-select" name="leave_bal">
+                                                <?php
+                                                for ($i = 1; $i <= 20; $i++) {
+                                                    echo "<option value='$i'>$i</option>";
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
 
                                         <div class="row justify-content-center">
                                             <div class="col-md-1 d-flex justify-content-center align-items-center">

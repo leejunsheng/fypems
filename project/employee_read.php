@@ -87,6 +87,8 @@ $role = $_SESSION['role'];
         <th>Image</th>
         <th>First Name</th>
         <th>Last Name</th>
+        <th>Phone Number</th>
+        <th>Email</th>
         <th>Gender</th>
         <th>Birthday</th>
         <th>Department</th>
@@ -111,7 +113,8 @@ $role = $_SESSION['role'];
             echo "<td style='width:100px;'><div'><img src='uploads/employee/$image' class='img-fluid'></div> </td>";
             echo "<td>{$firstname}</td>";
             echo "<td>{$lastname}</td>";
-
+            echo "<td>{$phone}</td>";
+            echo "<td>{$email}</td>";
 
             if ($gender == 'Male') {
                 echo "<td class=' text-center text-primary'>  <i class='fa-solid fa-person fs-2'></i> </td>";
