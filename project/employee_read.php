@@ -80,6 +80,7 @@ $role = $_SESSION['role'];
                     <div class='card mb-3'>
                         <div class='card-body'>
                             <div class='table-responsive'>
+                            
                             <table class='table table-hover table-responsive table-bordered' id='sortTable'> 
                                     <thead>
                                    <tr>
