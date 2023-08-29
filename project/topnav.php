@@ -41,7 +41,7 @@ $role = $_SESSION['role'];
                 <?php endif; ?>
 
                 <li>
-                        <a href="#pagemenu2" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-decoration-none nav-link">Attendance <i class="fa-solid fa-clipboard-user"></i></a>
+                        <a href="#pagemenu2" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle text-decoration-none nav-link">Attendance <i class="fa-solid fa-calendar"></i></a>
                         <ul class="collapse list-unstyled" id="pagemenu2">
 
                             <li>

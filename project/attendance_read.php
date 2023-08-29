@@ -30,7 +30,7 @@ $role = $_SESSION['role'];
     <?php // include database connection 
     include 'config/database.php'; ?>
 
-    <section class="h-100 pt-3">
+   
         <div class="container min-vh-100">
             <div class="row justify-content-center align-items-center h-100">
                 <div class="col-12 col-lg-9 col-xl-7">
@@ -107,7 +107,7 @@ $role = $_SESSION['role'];
                 </div>
             </div>
         </div>
-    </section>
+
 
     <!-- end .container -->
     <?php include 'script.php'; ?>
