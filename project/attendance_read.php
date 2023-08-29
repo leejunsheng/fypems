@@ -60,15 +60,16 @@ $role = $_SESSION['role'];
 
                             if ($role == 1 && !empty($filterDate)) {
                                 $query .= " WHERE DATE(c.date) ='$filterDate'";
-                            } else {
-                                $query .= " ORDER BY c.attend_id DESC";
+                            } elseif ($role != 1) {
+                                $query .= " WHERE c.user_id =$uid";
                             }
+                                $query .= " ORDER BY c.attend_id DESC";
+                            
+
                             $stmt = $con->prepare($query);
                             $stmt->execute();
                             $num = $stmt->rowCount();
-                            echo $num;
-
-
+                         
 
                             if ($num > 0) {
                                 echo "
