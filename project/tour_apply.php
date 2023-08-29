@@ -111,52 +111,52 @@ $uid = $_SESSION['user_id']
                             // include database connection
 
                             try {
-                                if ($role == 1) {
-                                    $assigned_user_id = $_POST['employee']; // Retrieve selected employee ID from POST
 
-                                    // Duplicate date check for admin-assigned users
-                                    $query = "SELECT *
+                                $assigned_user_id = $_POST['employee']; // Retrieve selected employee ID from POST
+
+                                // Duplicate date check for admin-assigned users
+                                $query = "SELECT *
                                               FROM `tour` AS l
                                               JOIN `employee` AS e ON l.user_id = e.user_id
                                               WHERE e.user_id = :assigned_user_id
                                               AND ('$start_date' BETWEEN l.start_date AND l.end_date OR '$tour_date' = l.tour_date)";
 
-                                    $stmt2 = $con->prepare($query);
-                                    $stmt2->bindParam(':assigned_user_id', $assigned_user_id);
-                                    $stmt2->execute();
-                                    $alreadyapply1 = $stmt2->rowCount();
-                                    if ($alreadyapply1 > 0) {
-                                        $error_msg .= "<div>The date has already been applied for the assigned user.</div>";
-                                        echo "<div class='alert alert-danger'>{$error_msg}</div>";
+                                $stmt2 = $con->prepare($query);
+                                $stmt2->bindParam(':assigned_user_id', $assigned_user_id);
+                                $stmt2->execute();
+                                $alreadyapply1 = $stmt2->rowCount();
+
+                                if ($alreadyapply1 > 0) {
+                                    $error_msg .= "<div>The date has already been applied for the assigned user.</div>";
+                                    echo "<div class='alert alert-danger'>{$error_msg}</div>";
+                                } else {
+                                    $query = "INSERT INTO `tour` (user_id, tour_type, tour_category, start_date, end_date, tour_date, time_period, description) VALUES (:user_id, :tour_type, :tour_category, :start_date, :end_date, :tour_date, :time_period, :desc)";
+
+                                    // Prepare the statement
+                                    $stmt = $con->prepare($query);
+
+                                    // Bind parameters
+                                    if ($role == 1) {
+                                        $stmt->bindParam(':user_id', $assigned_user_id); // Use the selected employee ID
+                                    } elseif ($role == 0) {
+                                        $stmt->bindParam(':user_id', $uid);
+                                    }
+
+                                    $stmt->bindParam(':tour_type', $tour_type);
+                                    $stmt->bindParam(':tour_category', $tour_cat);
+                                    $stmt->bindParam(':start_date', $start_date);
+                                    $stmt->bindParam(':end_date', $end_date);
+                                    $stmt->bindParam(':tour_date', $tour_date);
+                                    $stmt->bindParam(':time_period', $time_period);
+                                    $stmt->bindParam(':desc', $desc);
+
+                                    // Execute the query
+                                    if ($stmt->execute()) {
+
+                                        //echo "<div class='alert alert-success'>Work Tour apply successfully.</div>";
+                                        header("Location: tour_read.php?action=created");
                                     } else {
-                                        $query = "INSERT INTO `tour` (user_id, tour_type, tour_category, start_date, end_date, tour_date, time_period, description) VALUES (:user_id, :tour_type, :tour_category, :start_date, :end_date, :tour_date, :time_period, :desc)";
-
-                                        // Prepare the statement
-                                        $stmt = $con->prepare($query);
-
-                                        // Bind parameters
-                                        if ($role == 1) {
-                                            $stmt->bindParam(':user_id', $assigned_user_id); // Use the selected employee ID
-                                        } else {
-                                            $stmt->bindParam(':user_id', $uid);
-                                        }
-
-                                        $stmt->bindParam(':tour_type', $tour_type);
-                                        $stmt->bindParam(':tour_category', $tour_cat);
-                                        $stmt->bindParam(':start_date', $start_date);
-                                        $stmt->bindParam(':end_date', $end_date);
-                                        $stmt->bindParam(':tour_date', $tour_date);
-                                        $stmt->bindParam(':time_period', $time_period);
-                                        $stmt->bindParam(':desc', $desc);
-
-                                        // Execute the query
-                                        if ($stmt->execute()) {
-
-                                            //echo "<div class='alert alert-success'>Work Tour apply successfully.</div>";
-                                            header("Location: tour_read.php?action=created");
-                                        } else {
-                                            echo "<div class='alert alert-danger'>Unable to save record.</div>";
-                                        }
+                                        echo "<div class='alert alert-danger'>Unable to save record.</div>";
                                     }
                                 }
                             } catch (PDOException $exception) {
